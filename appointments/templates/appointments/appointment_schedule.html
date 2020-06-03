@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% block head %}
+<style>
+    .service_segment{
+        padding: 10px !important;
+    }
+    .ui.selection.dropdown{
+        float:right  !important;
+        display: block !important;
+    }
+    .add_to_cart_button{
+        clear:both  !important;
+        display: block !important;
+        margin-top: 53px !important;
+    }
+    .top_segs{
+        padding: 10px !important;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="ui vertical segment">
+    <div class="ui segments top_segs">
+    <div class="ui stackable grid">
+        <div class="four wide column">
+            <div class="ui vertical segment">
+            <a href="{% url 'doctors:doctor_detail' pk=doctor.pk %}">
+                {% if doctor.userinfo.image %}
+                <img class="ui image" src="{{ doctor.userinfo.image.url }}" style="width:auto; height: auto;">
+                {% endif %}
+            </a>
+            </div>
+        </div>
+        <div class="eleven wide column">
+            <div class="ui vertical clearing segment">
+                <a href="{% url 'doctors:doctor_detail' pk=doctor.pk %}">
+                    <h1>Dr. {{ doctor.userinfo.first_name }} {{ doctor.userinfo.last_name }}</h1>
+                </a>
+                <div class="meta">
+                    {% for degree in degrees %}
+                    {{ degree.name }},
+                    {% endfor %}
+                </div>
+                <br>
+                <p>{{ doctor.doctorinfo.current_position }} </p>
+                <p> Department of {{ doctor.doctorinfo.current_working_department }} </p>
+                <p> {{ doctor.doctorinfo.current_working_institution }} </p>
+            
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="ui vertical segment ">
+        <div style="text-align: center;">
+            <h1>Appointment Schedule</h1>
+        </div>
+        {% for service in services %}
+        <div class="ui segments service_segment">
+            <div class="ui stackable grid">
+                <div class="five wide column">
+                    <div class="ui vertical clearing segment">
+                        <h1>{{ service.day }}</h1>
+                        <p>{{ service.clinic_name }}</p>
+                        <p>{{ service.address.name }},{{ service.area.name }},
+                            {{ service.city.name }},{{ service.division.name }}</p>
+                        {{ service.start_time }} <span> &emsp; To &emsp;</span>
+                        {{ service.end_time }}
+                    </div>
+                </div>
+                <div class="five wide column">
+                    <div class="ui vertical clearing segment">
+                        <h5>New Appointment : BDT {{ service.servicefee.new_appointment_fee }}</h5>
+                        <h5>Re-Appointment : BDT {{ service.servicefee.old_appointment_fee }}</h5>
+                        <h5>Report showing Appointment : BDT {{ service.servicefee.report_appointment_fee }}</h5>
+                    </div>
+                </div>
+                <div class="five wide column">
+                    <div class="ui vertical clearing segment service_wrapper">
+                        <div class="ui selection dropdown">
+                            <input type="hidden" name="appointment_type">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">Appointment Type</div>
+                            <div class="menu">
+                                <div class="item" data-value="New Appointment">New Appointment</div>
+                                <div class="item" data-value="Re-Appointment">Re-Appointment</div>
+                                <div class="item" data-value="Report Showing Appointment">Report Showing Appointment</div>
+                            </div>
+                        </div>
+                    
+                        <div class="ui right floated positive button add_to_cart_button" id="{{ service.id }}">
+                            Add to Cart
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            {% endfor %}
+    </div>
+ 
+{% endblock %}
+
+
+
+{% block scripts %}
+    <script>
+        $('.ui.selection.dropdown').dropdown();
+
+        $(".add_to_cart_button").on("click", function () {
+                service_id = $(this).attr('id')
+                parent = $(this).parents(".service_wrapper")
+                appointment_type = parent.find("input[name='appointment_type']").val();
+
+                if(appointment_type == "")
+                {
+                    alert("Please select the appointment type!")
+                }
+                else{
+                    $.ajax({
+                        type: 'get',
+                        url: '{% url "carts:add_to_cart" %}',
+                        data: {
+                            'appointment_type': appointment_type,
+                            'service_id': service_id
+                        },
+                        success: function (respose, status_text, xhr) {
+                            console.log("Yeah,good! it's working!")
+                            alert(respose.messages)
+                        },
+                        error: function (request, status, error) {
+                            if(status == 'error'){
+                                location.href = '{% url "users:login" %}'
+                            }
+                        }
+                    });
+                }
+        })
+    </script>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Base Template </title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .ui.vertical.center.aligned.segment.home_head{
+            height: 600px !important;
+        background-image: linear-gradient(
+            to right bottom,
+            rgba(126,213,111,0.6),
+            rgba(40,180,131,0.8)),
+            url("{% static 'image/stethoscope.jpg' %}");
+        background-size: cover;
+        }
+        .ui.vertical.segment.main_section{
+            min-height: 1200px !important;
+            background-color:#fff;
+        }
+        .home_quotes{
+            max-width: 50%;
+            text-align: left;
+            margin: 5%;
+            font-family: cursive;
+        }
+        .home_quotes .writer { margin-left: 20px; font-size: 20px; }
+        .home_quotes p{
+            font-style: italic;
+            letter-spacing: 1px;
+            display:inline-block;
+            font-family:sans-serif;
+            font-size: 6vh;
+            color:#eee;
+          }
+
+    </style>
+    
+    {% include 'base/css.html' %}
+</head>
+
+<body>
+<div class="ui vertical center aligned segment home_head">
+    <div class="ui container grid">
+        <div>{% include 'base/navbar.html' %}</div>
+        <div class="home_quotes">
+            <p>
+                <span>&#8220;</span>He who has health has hope; and he who has hope has everything.<span>&#8221;</span>
+                 <span class="writer">~Arabian proverb</span></p>
+             
+        </div>
+    </div>
+</div>
+
+<div class="ui vertical segment main_section">
+    <div class="ui middle aligned stackable grid">
+        <div class="ui container">
+            <h2>Welcome to home page</h2>
+        </div>
+    </div>
+</div>
+        
+<div class="ui vertical segment footer_section">
+    <div class="ui middle aligned stackable grid">
+        <div class="ui container">
+    {% include 'base/footer.html' %}
+        </div>
+    </div> 
+</div>
+        
+        
+        {% include 'base/js.html' %}
+</body>
+
+</html>

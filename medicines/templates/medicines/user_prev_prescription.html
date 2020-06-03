@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="ui vertical segment">
+    {% if appointments %}
+    {% for appointment in appointments %}
+    <div class="ui clearing segment">
+        <div class="ui stackable grid">
+            <div class="five wide column">
+                <img src="{{ appointment.doctor.userinfo.image.url }}" alt="">
+            </div>
+            <div class="six wide column">
+                <h1>Dr. {{ appointment.doctor.userinfo.first_name }} {{ appointment.doctor.userinfo.last_name }}</h1>
+                <p>
+                    <small class="meta">
+                        {% for degree in degrees %}
+                        {{ degree.name }},
+                        {% endfor %}
+                    </small>
+                </p>
+                <p>{{ appointment.doctor.doctorinfo.speciality }} </p>
+                <p>{{ appointment.doctor.doctorinfo.current_position }} </p>
+                <p> Department of {{ appointment.doctor.doctorinfo.current_working_department }} </p>
+                <p> {{ appointment.doctor.doctorinfo.current_working_institution }} </p>
+            </div>
+            <div class="five wide column">
+                <h1>{{ appointment.patient.userinfo.first_name }}
+                    {{ appointment.patient.userinfo.last_name }}</h1>
+                <p>User ID : {{ appointment.patient.user_unique_id }}</p>
+                <p>Appointment ID : {{ appointment.appointment_id }}</p>
+            </div>
+        </div>
+
+
+        <!-- This is for showing added medicine -->
+        <div class="ui stackable grid" style="margin: 100px;">
+
+            {% for medicine in appointment.medicines.all %}
+            <div class="row">
+                <h3>{{ medicine.name }}</h3> &emsp;
+                <div class="meta">Quantity:{{ medicine.quantity }} &emsp;
+                    Taking Time:{{ medicine.taking_time }} </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% endfor %}
+    {% else %}
+    <p>You do not have any previous prescription here!</p>
+    {% endif %}
+</div>
+
+
+{% endblock %}

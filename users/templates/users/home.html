@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Alhamdulillah! it's working.....</h1>
+    <br><br><br>
+   <a href="{% url 'users:registration' %}">Sign up</a><br>
+   <a href="{% url 'users:login' %}">Login</a><br>
+   <a href="{% url 'users:logout' %}">Logout</a><br>
+   <a href="{% url 'users:password_reset' %}">Reset Password</a><br>
+   <a href="{% url 'users:password_change' %}">Change Password</a><br>
+   <a href="{% url 'doctors:doctor_information' %}">Built Doctor Profile</a><br>
+</body>
+</html>

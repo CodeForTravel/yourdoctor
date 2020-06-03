@@ -1,0 +1,18 @@
+<style>
+    .ui.form {
+        width: 40%;
+        margin : auto !important;
+        padding:2% 5% 2% 5% !important;
+        background-color: cadetblue !important;
+    }
+    
+</style>
+
+    <form method="POST" class='ui form' enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="positive fluid ui button" type="submit">
+            Submit
+        </button>
+    </form>
+

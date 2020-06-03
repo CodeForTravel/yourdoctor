@@ -1,0 +1,95 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Base Template </title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        body{  background-color: azure; }
+
+        .ui.center.aligned.segment.base_header {
+            background-image: linear-gradient(
+            to right bottom,
+            rgba(126,213,111,0.6),
+            rgba(40,180,131,0.8));
+            background-size: cover;
+            padding: 10px;
+        }
+       .ui.vertical.segment.main_section{
+           margin: 0px;
+           padding: 10px;
+           min-height: 600px;
+           background-color: lavender;
+       }
+       .ui.vertical.segment.footer_section{
+           margin: 10px;
+           padding: 10px;
+       }
+    </style>
+    {% include 'base/css.html' %}
+    {% block head %} {% endblock %}
+</head>
+
+<body>
+<div class="ui vertical center aligned segment base_header">
+    {% include 'base/navbar.html' %}
+</div>
+
+
+{% if messages %}
+<div class="ui messages modal">
+    <i class="close icon"></i>
+    <div class="header">
+        Attention Please!
+    </div>
+    <div class="content">
+        <div class="description">
+            
+            {% for message in messages %}
+            {{ message.tags }}!  {{ message }}
+            {% endfor %}
+           
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="ui vertical segment main_section">
+    <div class="ui middle aligned stackable grid">
+        <div class="ui container">
+            {% block content %} {% endblock %}
+        </div>
+    </div>
+</div>
+
+<div class="ui container">
+<div class="ui vertical segment footer_section">
+    <div class="ui middle aligned stackable grid">
+        
+            {% block footer %}
+            {% include 'base/footer.html' %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+  
+
+
+    {% include 'base/js.html' %}
+    
+    {% block scripts %}
+        
+    {% endblock %}
+
+    <script>
+        $('.ui.messages.modal')
+            .modal('show');
+    </script>
+    
+</body>
+
+</html>

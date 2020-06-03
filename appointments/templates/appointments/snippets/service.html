@@ -1,0 +1,70 @@
+<div class="ui stackable grid appointment_wrapper" id="service_wrap">
+    <div class="six wide column">
+        <div class="ui vertical clearing segment">
+            <h1>{{ service.day }}</h1>
+            <p>{{ service.clinic_name }}</p>
+            <p>{{ service.address.name }},{{ service.area.name }},
+                {{ service.city.name }},{{ service.division.name }}</p>
+            {{ service.start_time }} <span> &emsp; To &emsp;</span>
+            {{ service.end_time }}
+        </div>
+    </div>
+    <div class="five wide column">
+        <div class="ui vertical clearing segment">
+            <h5>New Appointment : BDT {{ service.servicefee.new_appointment_fee }}</h5>
+            <h5>Re-Appointment : BDT {{ service.servicefee.old_appointment_fee }}</h5>
+            <h5>Report showing Appointment : BDT {{ service.servicefee.report_appointment_fee }}</h5>
+        </div>
+    </div>
+    <div class="five wide column">
+        <div class="ui vertical clearing segment">
+            <div class="ui selection dropdown">
+                <input type="hidden" name="appointment_type" id="appointment_type">
+                <i class="dropdown icon"></i>
+                <div class="default text">Appointment Type</div>
+                <div class="menu">
+                    <div class="item" data-value="new">New Appointment</div>
+                    <div class="item" data-value="re">Re-Appointment</div>
+                    <div class="item" data-value="report">Report Showing Appointment</div>
+                </div>
+            </div>
+            <!-- <input type="hidden" value="{{ service.id }}" id="service_id"> -->
+            <div class="ui right floated button add_to_cart_button" id="{{ service.id }}">
+                Add to Cart
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+   $(document).ready(function () {
+        $('.ui.selection.dropdown').dropdown();
+
+        $('.add_to_cart_button').click(function () {
+            // var service_id = $("#service_id").val()
+            var service_id = $(this).attr('id');
+            var appointment_type = $("#appointment_type").val()
+            console.log(appointment_type)
+            console.log(service_id)
+            $.ajax({
+                type: 'get',
+                url: '{% url "carts:add_to_cart" %}',
+                data: {
+                    'appointment_type': appointment_type,
+                    'service_id': service_id
+                },
+                success: function (respose) {
+                    console.log('Congratulations!')
+                }
+            });
+        });
+    }) 
+
+
+    //  $(".add_to_cart_button").on("click", function(){
+    //     value = $(this).attr('id')
+    //     parent = $(this).parent(".appointment_wrapper")
+    //     console.log(parent);
+    // })
+</script>

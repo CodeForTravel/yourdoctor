@@ -1,0 +1,13 @@
+{% include 'base/css.html' %}
+{% include 'base/js.html' %}
+
+{% url 'appointments:pending_appointment' as pending_url %}
+{% url 'appointments:completed_appointment' as completed_url %}
+
+<div class="ui tabular menu">
+    <a class="item {% if request.path == pending_url %}active {% endif %}" href="{{ pending_url }}">
+        Appointment Pending</a>
+    <a class="item {% if request.path == completed_url %}active {% endif %}" href="{{ completed_url }}">
+        Appointment Completed</a>
+    <a class="item" href="#">My Patient List</a>
+</div>

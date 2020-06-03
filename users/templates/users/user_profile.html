@@ -1,0 +1,137 @@
+    {% extends 'base.html' %}
+
+    {% block content %}
+    <div class="ui vertical segment">
+        <div class="ui stackable grid">
+            <div class="four wide column">
+                <div class="ui center aligned segment">
+                    <h1>{{ user.userinfo.first_name }} {{ user.userinfo.last_name }}</h1>
+                    {% if user.userinfo.image %}
+                    <image src="{{ user.userinfo.image.url }}" style="width:220px; height: 250px;"></image>
+                    {% endif %}
+
+                </div>
+            </div>
+    
+            <div class="eight wide column">
+                <div class="ui segment">
+                    There will be some info....
+                </div>
+            </div>
+            <div class="four wide right floated column">
+                <div class="ui segment">
+                    <a href="{% url 'medicines:user_prescription' user.user_unique_id %}">
+                        <button class="fluid ui right labeled teal basic icon button">
+                            My Prescription<i class="medkit icon"></i>
+                        </button>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="ui stackable grid">
+            <div class="row">
+            <div class="column">
+                <div class="ui clearing segment">
+                    <h2>Personal Info</h2>
+                    <h4>Religion : {{ user.userinfo.religion }}</h4>
+                    <h4>Gender : {{ user.userinfo.gender }}</h4>
+                    <h4>Email : {{ user.email }}</h4>
+                    <h4>User type : {{ user.user_type }}</h4>
+                    <button class="ui right floated button">
+                        <a href="{% url 'users:edit_user_info' %}">Edit your profile</a>
+                    </button>
+                    
+                    
+                </div>
+            </div></div>
+            <div class="row">
+                <div class="column">
+                    <div class="ui clearing segment">
+                        <h2>Address</h2>
+                        <h4>Country : {{ user_address.country.name }}</h4>
+                        <h4>State/Divivsion : {{ user_address.division.name }}</h4>
+                        <h4>City/Town : {{ user_address.city.name }}</h4>
+                        {{ user_address.area.name }} , {{ user_address.address.name }}
+
+                        <button class="ui right floated button">
+                            <a href="{% url 'users:user_address_form' %}">Add your address</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if request.user.user_type == 'doctor' %}
+        <!-- for degree info -->
+        <div class="ui stackable grid">
+            <div class="column">
+                <div class="ui clearing segment">
+                    <div style="text-align: center;">
+                        <h1>Your Dgrees </h1>
+                    </div>
+                    {% for degree in degrees %}
+                    <div class="ui clearing segment">
+                        <h1>{{ degree.name }}</h1>
+                        <p>{{ degree.institution_name }}</p>
+                        {{ degree.starting_time }} <span> &emsp; To &emsp;</span>
+                        {{ degree.ending_time }}
+                    </div>
+                    {% endfor %}
+                    <div class="ui right floated button">
+                        <a href="{% url 'degrees:degree_form' %}">Add Degree</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- for service info -->
+        
+
+                <div class="ui clearing segment">
+                    <div style="text-align: center;">
+                        <h1>Your Services </h1>
+                    </div>
+                    {% if services %}
+                    {% for service in services %}
+                    <div class="ui segment">
+                    <div class="ui stackable grid">
+                        <div class="row">
+                            <div class="seven wide column">
+                                <b>
+                                    <h1>{{ service.day }}</h1>
+                                </b>
+                            
+                                <p>{{ service.clinic_name }}</p>
+                                <p>{{ service.address.name }},{{ service.area.name }},
+                                    {{ service.city.name }},{{ service.division.name }},{{ service.country.name }}</p>
+                                {{ service.start_time }} <span> &emsp; To &emsp;</span>
+                                {{ service.end_time }}
+                            </div>
+                            <div class="six wide column">
+                                <h3>Appointment Fee</h3>
+                                <p>New Appointment : BDT {{ service.servicefee.new_appointment_fee}}</p>
+                                <p>Re-Appointment : BDT {{ service.servicefee.old_appointment_fee}}</p>
+                                <p>Report Show Appointment : BDT {{ service.servicefee.report_appointment_fee}}</p>
+                            </div>
+                            <div class="three wide column">
+                                <a href=""><button class="ui button">Edit Service</button></a>
+                            </div>
+                        </div> 
+                    </div>  
+                </div>
+                {% endfor %}
+            {% endif %}
+                <div class="ui right floated button">
+                    <a href="{% url 'services:doctor_service_form' %}">Add Service</a>
+                </div>
+            </div>
+
+
+    </div>
+
+    {% endif %}
+
+
+    {% endblock %}

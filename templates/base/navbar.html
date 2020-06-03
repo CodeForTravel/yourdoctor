@@ -1,0 +1,61 @@
+{% include 'base/css.html' %}
+{% include 'base/js.html' %}
+
+{% url 'users:registration' as registration_url %}
+{% url 'users:login' as login_url %}
+{% url 'users:logout' as logout_url %}
+{% url 'users:password_reset' as password_reset_url %}
+{% url 'users:password_change' as password_change_url %}
+{% url 'doctors:doctor_information' as  doctor_information_url %}
+{% url 'doctors:doctor_list' as doctor_list_url %}
+{% url 'home:home_page' as home_url %}
+{% url 'users:user_profile' as user_profile_url %}
+{% url 'appointments:pending_appointment' as appointment_url %}
+{% url 'carts:cart_home' as cart_home_url %}
+
+<style>
+    .ui.stackable.secondary.menu a{
+        color: whitesmoke;
+        font-size: 15px;
+    }
+</style>
+
+<div class="ui stackable secondary menu">
+    <div class="ui container">
+        <a class="item {% if request.path == home_url%}active {% endif %}" href="{{ home_url }}">Home</a>
+        <a class="item {% if request.path == doctor_list_url%}active {% endif %}" href="{{ doctor_list_url }}">Doctors</a>
+        {% if request.user.user_type == 'doctor' %}
+        <a class="item {% if request.path == appointment_url %} active {% endif %}" href="{{ appointment_url }} ">Appointments</a>
+        {% endif %}
+        <div class="right menu">
+            <div class="item">
+                <div class="ui icon input">
+                    <input type="text" placeholder="Search...">
+                    <i class="search link icon"></i>
+                </div>
+            </div>
+            
+            <a class="item {% if request.path == cart_home_url %}active {% endif %}" href="{{ cart_home_url }}">
+                <i class="cart plus icon"></i>
+            </a>
+            {% if request.user.is_authenticated %}
+            <a class="item " href="">
+                <i class="ambulance icon"></i>
+            </a>
+            <a href="{{ logout_url }}"  class="item {% if request.path == logout_url %}active {% endif %}">
+                Logout
+            </a>
+            <a class="item {% if request.path == user_profile_url %}active {% endif %}" href="{{ user_profile_url }}">
+                <i class="user icon"></i>
+            </a>
+            {% else %}
+            <a href="{{ login_url }}" class="item {% if request.path == login_url %}active {% endif %}">
+                Login
+            </a>
+            <a href="{{ registration_url }}" class="item {% if request.path == registration_url %}active {% endif %}">
+               Sign-Up
+             </a>
+            {% endif %}
+        </div>
+    </div>
+</div>

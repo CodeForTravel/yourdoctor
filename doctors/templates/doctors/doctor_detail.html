@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block head %}
+    <style>
+      
+    </style>
+{% endblock %}
+
+    
+{% block content %}
+<div class="ui vertical segment">
+<div class="ui stackable grid">
+    <div class="five wide column">
+        <div class="ui center aligned  segment">
+            {% if doctor.userinfo.image %}
+            <img src="{{ doctor.userinfo.image.url }}" style="width: 240px; height: 275px;">
+            {% endif %}
+        </div>
+    </div>
+    <div class="eleven wide right floated column">
+        <div class="ui  segment">
+            <h1>{{ doctor.userinfo.first_name }} {{ doctor.userinfo.last_name }}</h1>
+            <div class="meta">
+                {% for degree in degrees %}
+                {{ degree.name }},
+                {% endfor %}
+            </div>
+            <br>
+            
+            <p>{{ doctor.doctorinfo.current_position }} </p>
+            <p>Department of {{ doctor.doctorinfo.current_working_department }} </p>
+            <p> {{ doctor.doctorinfo.current_working_institution }} </p>
+            <button class="ui button">
+                <a href="{% url 'appointments:appointment_schedule' doctor.pk %}">Schedule</a>
+            </button>
+            
+        </div>
+    </div>
+</div>
+<div class="ui stackable grid">
+    <div class="column">
+
+       
+            <div class="ui top attached tabular menu">
+                <a class="active item" data-tab="first">Personal Information</a>
+                <a class="item" data-tab="second">Medical Information</a>
+                <a class="item" data-tab="third">Graduation Information</a>
+                <a class="item" data-tab="fourth">Speciality</a>
+                <a class="item" data-tab="fifth">Experiences</a>
+            </div>
+
+            <div class="ui bottom attached active tab segment" data-tab="first">
+                <h4>Religion : {{ doctor.userinfo.religion }} </h4>
+                <h4>Gender : {{ doctor.userinfo.gender }} </h4>
+                <h4>Country: {{ address.country.name }}</h4>
+                <h4>Address : {{address.address.name }},{{address.area.name }},{{address.city.name }},{{address.division.name }}</h4>
+            </div>
+
+            <div class="ui bottom attached tab segment" data-tab="second">
+                
+                <h4>BMDC Number : {{ doctor.doctorinfo.bmdc_number }} </h4>
+                <h4>Current position: {{ doctor.doctorinfo.current_position }} </h4>
+                <h4>Department of  : {{ doctor.doctorinfo.current_working_department }} </h4>
+                <h4>{{ doctor.doctorinfo.current_working_institution }} </h4>
+            </div>
+
+            <div class="ui bottom attached tab segment" data-tab="third">
+                    {% if degrees %}
+                    {% for degree in degrees %}
+                    <h3>{{ degree.name }}</h3>
+                    <h5>{{ degree.institution_name }}</h5>
+                    <h5>{{ degree.starting_time }}</h5>
+                    <h5>{{ degree.ending_time }}</h5>
+                    <br><br>
+                    {% endfor %}
+                    {% endif %}
+            </div>
+            <div class="ui bottom attached tab segment" data-tab="fourth"></div>
+            <div class="ui bottom attached tab segment" data-tab="fifth"></div>
+    </div>
+</div>
+
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $('.menu .item')
+            .tab()
+            ;
+</script>
+{% endblock %}

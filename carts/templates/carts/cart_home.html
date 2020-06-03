@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block head %}
+<style>
+    .segment{
+        padding: 10px !important;
+    }
+    h4{ text-align: center !important;}
+    .ui.positive.button{
+        float: right !important;
+    }
+    img{
+        width: 150px !important;
+        height: 170px !important;
+    }
+    span{
+        font-size: 18px !important;
+    }
+    .ui.right.floated.button{
+        margin-top: 120px;
+    }
+    .total{
+        text-align: right !important;
+    }
+</style>
+{% endblock %}
+{% block content %}
+
+<div class="ui vertical segment">
+    <h1>Cart Home</h1>
+    {% if cart_items %}
+            <div class="ui placeholder segment">
+                {% for item in cart_items %}
+                <div class="ui segments service_segment">
+                    <div class="ui stackable grid">
+                        <div class="three wide column">
+                            <div class="ui vertical clearing segment">
+                                <h4>{{ item.service.user.userinfo.first_name }} {{ item.service.user.userinfo.last_name }}</h4>
+                                <a href="{% url 'doctors:doctor_detail' pk=item.service.user.pk %}">
+                                    {% if item.service.user.userinfo.image %}
+                                    <img class="ui image" src="{{ item.service.user.userinfo.image.url }}" style="width:auto; height: auto;">
+                                    {% endif %}
+                                </a>
+                            </div>
+                        </div>
+                        <div class="nine wide column">
+                            <div class="ui vertical clearing segment">
+                                <h3>{{ item.service.day }}</h3>
+                                <p><span>Date : </span> {{ item.appointment_schedule }}</p>
+                                <p><span>Appointment type : </span>{{ item.appointment_type }}</p>
+                                <p><span>Time : </span>{{ item.service.start_time }} to {{ item.service.end_time }}</p>
+                            </div>
+                        </div>
+                        <div class="four wide column">
+                            <div class="ui vertical clearing segment">
+                                <h4>BDT : {{ item.appointment_fee }}</h4>
+                                <a href="{% url 'carts:remove_item' pk=item.id %}">
+                                    <div class="ui right floated inverted red button">
+                                        Remove?
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+                <div class="total"><p><span><b>Total</b> : </span> BDT {{ total }} </p></div>
+                <div class="ui inverted green button">
+                    Check-out
+                </div>
+            </div>
+        {% else %}
+        <div class="ui segment">
+            There is no appointment is your wish list!
+        </div>
+        {% endif %}
+</div>
+
+{% endblock %}

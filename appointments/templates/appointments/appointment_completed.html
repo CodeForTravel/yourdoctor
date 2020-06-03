@@ -1,0 +1,27 @@
+<!-- {% extends 'base.html' %}
+
+{% block content %}
+{% if request.user.user_type == 'doctor' %}
+<div class="eleven wide right floated column">
+    <div class="ui vertical segment">
+        {% include 'appointments/navbar/appointment_nav.html' %}
+    </div>
+</div>
+{% endif %}
+
+<div class="ui segment">
+    <div style="text-align: center;"><h1>Completed Appointments</h1></div>
+    {% for appointment in appointments %}
+    <div class="ui clearing segment">
+        <a href="">{{ appointment.appointment_name }}</a> &emsp;
+        <a href="">{{ appointment.patient.user_unique_id }}</a>
+        <div class="ui right floated button">Remove</div>
+        <div class="ui right floated button">
+            <a href="{% url 'appointments:previous_treatment' appointment.appointment_id %}">Previous Treatment
+        </a></div>
+    </div>
+
+    {% endfor %}
+
+</div>
+{% endblock %} -->

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="ui vertical segment">
+    <div style="text-align: center;">
+        <h1>Pending Appointments</h1>
+    </div>
+
+
+    <div class="ui segment">
+        <div class="ui stackable grid">
+            <div class="three wide column">
+                <div class="ui vertical attached tabular menu">
+                    {% for schedule in schedules %}
+                    <a class="item" data-tab="{{ schedule.id }}">{{ schedule.day }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="thirteen wide column">
+                {% for schedule in schedules %}
+                <div class="ui bottom attached tab " data-tab="{{ schedule.id }}">
+                    {% for item in items %}
+                        {% if item.appointment_schedule == schedule %}
+                            <div class="ui clearing segment">
+                                <a href=""> {{ item.user.userinfo.first_name }} {{ item.user.userinfo.last_name }}</a>
+                                <h4>Appointment ID : {{ item.appointment_id }}</h4>
+                                <h4>Appointment Type: {{ item.appointment_type }}</h4>
+                                <a href="{% url 'appointments:previous_treatment' item.appointment_id %}">
+                                    <div class="ui right floated button">Previous Preascription</div>
+                                </a>
+                                <a href="{% url 'medicines:new_prescription' item.appointment_id %}">
+                                    <div class="ui right floated button">  New Prescription </div>
+                                </a>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $('.menu .item')
+            .tab()
+            ;
+</script>
+{% endblock %}
+
+
+
+
+
+<!-- http://localhost:8000/appointments/doctor/appointment/pending/ -->

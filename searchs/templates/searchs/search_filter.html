@@ -1,0 +1,41 @@
+<!-- {% extends 'base.html' %}
+
+{% block content %}
+
+<form method="GET" class="ui form">
+    <div class="ui fields">
+    <div class="field">
+        <label>{{ form.country.label_tag }}</label>
+        {{ form.country }}
+    </div>
+    <div class="field">
+        <label>{{ form.division.label_tag }}</label>
+        {{ form.division }}
+    </div>
+    <div class="field">
+        <label>{{ form.city.label_tag }}</label>
+        {{ form.city }}
+    </div>
+    <div class="field">
+        <label>{{ form.area.label_tag }}</label>
+        {{ form.area }}
+    </div>
+    <div class="field">
+        <label>{{ form.address.label_tag }}</label>
+        {{ form.address }}
+    </div>
+    </div>
+    <button type="submit" class="ui button">search</button>
+</form>
+
+
+{% for doctor in user_list %}
+{% if doctor %}
+<h1>{{ doctor.userinfo.first_name }} {{ doctor.userinfo.last_name }}</h1>
+{% else %}
+<h1>Sorry there is no doctor here!</h1>
+{% endif %}
+{% endfor %}
+
+{% endblock %}
+ -->

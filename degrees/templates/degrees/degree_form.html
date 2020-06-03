@@ -1,0 +1,72 @@
+
+{% extends 'base.html' %}
+{% block head %}
+<link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+<style>
+    .curtom_form {
+        width: 50%;
+        margin: 5% 25% 5% 25% !important;
+        padding: 5% !important;
+        background-color: cadetblue !important;
+    }
+    
+</style>
+ {% endblock %}
+
+
+{% block content %}
+
+<div class="ui segment curtom_form">
+    <h1>Submit Your Degree</h1>
+    <form method="POST" class='ui form'>
+        {% csrf_token %}
+        <div class="field">
+            <label>Name Of Degree</label>
+            {{ form.name }}
+        </div>
+        <div class="field">
+        <label>Name Of Institution</label>
+        {{ form.institution_name}}
+        </div>
+        <div class="field">
+            <label for="id_starting_date">* Starting Date</label>
+            <div class="ui left icon input">
+                {{ form.starting_time }}
+                <i class="calendar alternate icon"></i>
+            </div>
+        </div>
+        
+        <div class="field">
+            <label for="id_starting_date">* End Date</label>
+            <div class="ui left icon input">
+                {{ form.ending_time }}
+                <i class="calendar alternate icon"></i>
+            </div>
+        </div>
+
+        
+        <button class="positive fluid ui button" type="submit">
+            Submit
+        </button>
+    </form>
+</div>
+   
+{% endblock %}
+
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script>
+    $(function () {
+        $("#id_starting_time, #id_ending_time").datepicker({
+            changeYear: true,
+            changeMonth: true,
+            dateFormat: "yy-mm-dd", //match to django datetime format otherwise cant save into db
+            yearRange: "1990:2030"
+        });
+    });
+</script>
+{% endblock %}

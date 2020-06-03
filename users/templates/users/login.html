@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+<style>
+    .form_sec {
+        width: 400px !important;
+        height: auto !important;
+        margin: auto !important;
+        background-color: teal !important;
+        color: whitesmoke !important;
+        padding: 40px !important;
+    }
+
+    .wrapper_sec {
+        margin-top: 80px !important;
+    }
+
+    .extra {
+        margin-top: 20px !important;
+    }
+
+    .extra a {
+        color: white !important;
+        margin-left: 5px !important;
+    }
+</style>
+{% endblock %}
+{% block content %}
+
+<div class="ui vertical segment wrapper_sec">
+
+    <div class="ui stackable grig">
+        <div class="ui center aligned segment form_sec">
+            <h1 style="text-align: center;">Login</h1>
+            <form method="POST" class='ui form' enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="field">
+                    <div class="ui left icon input">
+                        {{ form.username }}
+                        <i class="user icon"></i>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        {{ form.password }}
+                        <i class="star icon"></i>
+                    </div>
+                </div>
+                <button class="positive fluid ui button" type="submit">
+                    Submit
+                </button>
+            </form>
+            <div class="extra">
+                <p>New Here?
+                <u><a href="{% url 'users:registration'%}">Sign up</a></u></p>
+                <p>Forget password? 
+                    <u><a href="{% url 'users:password_reset' %}">Reset</a></u>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

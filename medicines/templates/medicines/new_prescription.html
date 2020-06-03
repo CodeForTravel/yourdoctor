@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% block head %}
+<style>
+    img{
+        width: 200px;
+        height: 225px;
+    }
+    add_medicine_button{
+        float: right !important;
+    }
+    .ui.modal{
+        padding: 20px ;
+    }
+    .ui.form{
+        padding: 15px;
+    }
+    .ui.stackable.grid.show_medicine{
+        margin: 0px 100px 0px 100px;
+        padding: 10px;
+    }
+    
+</style>
+{% endblock %}
+{% block content %}
+<div class="ui vertical segment">
+<div><h1>New Preascription</h1></div>
+
+<div class="ui clearing segment">
+    <div class="ui stackable grid">
+        <div class="five wide column">
+            <img src="{{ cart.doctor.userinfo.image.url }}" alt="">
+        </div>
+        <div class="six wide column">
+            <h1>Dr. {{ cart.doctor.userinfo.first_name }} {{ cart.doctor.userinfo.last_name }}</h1>
+            <p>
+                <small class="meta">
+                    {% for degree in degrees %}
+                    {{ degree.name }},
+                    {% endfor %}
+                </small>
+            </p>
+            <p>{{ cart.doctor.doctorinfo.current_position }} </p>
+            <p> Department of {{ cart.doctor.doctorinfo.speciality }} </p>
+           
+            <p> {{ cart.doctor.doctorinfo.current_working_institution }} </p>
+        </div>
+        <div class="five wide column">
+            <h1>{{ cart.user.userinfo.first_name }} 
+                {{ cart.user.userinfo.last_name }}</h1>
+            <p>User ID : {{ cart.user.user_unique_id }}</p>
+            <p>Appointment ID : {{ cart.appointment_id }}</p>
+        </div>
+    </div>
+    
+<hr>
+
+<div class="ui vertical clearing segment">
+    <button type="button" class="ui left floated button test add_medicine">
+        Add medicine
+    </button>
+
+        <a href="{% url 'appointments:previous_treatment' cart.appointment_id %}">
+            <div class="ui right floated button">Previous Preascription</div>
+        </a>
+
+        <a href="{% url 'appointments:complete_appointment' cart.id %}">
+        <div class="ui right floated button"> Mark as Complete</div>
+        </a>
+  
+</div>
+
+<!-- This is for showing added medicine -->
+    <div class="show_medicine">
+        <div class="ui segments ">
+        {% for medicine in medicines %}
+            <div class="ui vartical clearing segment">
+                <h3>{{ medicine.name }}</h3>
+                <a href=""><div class="ui right floated red button">Delete</div></a>
+                <p class="meta">Quantity: {{ medicine.quantity }} &emsp;
+                    Taking Time: {{ medicine.taking_time }}
+                </p>
+                
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+<!-- this is for add medicine -->
+    <div class="ui modal">
+        <i class="close icon"></i>
+        <div class="header">
+            Add medicine here
+        </div>
+        <form method="POST" class="ui form">
+            {% csrf_token %}
+            <div class="content">
+                <div class="description">
+                    <div class="fields">
+                        <div class="six wide field">
+                            <label>{{ form.name.label }}</label>
+                            {{ form.name }}
+                        </div>
+                        <div class="three wide field">
+                            <label>{{ form.taking_time.label }}</label>
+                            {{ form.taking_time }}
+                        </div>
+                        <div class="two wide field">
+                            <label>{{ form.quantity.label }}</label>
+                            {{ form.quantity }}
+                        </div>
+                    </div>
+                    <button class="ui button add_medicine_button" type="submit">Add</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+</div>
+</div>
+{% endblock %}
+ 
+
+{% block scripts %} 
+<script>
+    $(".add_medicine").click(function(){
+        $('.ui.modal')
+            .modal('show')
+            ;
+    })
+</script>
+{% endblock %}

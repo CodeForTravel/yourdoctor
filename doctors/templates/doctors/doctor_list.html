@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block head %}
+<style>
+.filter_button{
+    padding-top: 24px !important;
+}
+</style>
+{% endblock %}
+{% block content %}
+
+<!-- Filter the doctors -->
+<div class="ui vertical segment">
+<!-- <div class="ui middle aligned stackable grid">
+    <div class="ui column">
+        <div class="ui segment">
+            <form method="GET" class="ui form">
+                <div class="ui fields">
+                    
+                    <div class="field">
+                        <label>{{ form.country.label_tag }}</label>
+                        {{ form.country }}
+                    </div>
+                    <div class="field">
+                        <label>{{ form.division.label_tag }}</label>
+                        {{ form.division }}
+                    </div>
+                    <div class="field">
+                        <label>{{ form.city.label_tag }}</label>
+                        {{ form.city }}
+                    </div>
+                    <div class="field">
+                        <label>{{ form.area.label_tag }}</label>
+                        {{ form.area }}
+                    </div>
+                    <div class="field">
+                        <label>{{ form.address.label_tag }}</label>
+                        {{ form.address }}
+                    </div>
+                    <div class="field filter_button"><button type="submit" class="ui button">Filter</button></div>
+                </div>  
+            </form>
+        </div>
+    </div>
+</div> -->
+
+
+<!-- Showing Doctor list -->
+<div class="ui middle aligned stackable grid">
+    <div class="ui column">
+        <div class="ui segment">
+            <div class="ui four link cards">
+                {% for doctor in user_list %}
+                {% include 'doctors/snippets/card.html' with instance=doctor%}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+    $('#country_dropdown').dropdown()
+</script>
+{% endblock %}
