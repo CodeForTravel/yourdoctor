@@ -11,6 +11,9 @@ class Service(models.Model):
     clinic_name = models.CharField(max_length=200,null=True,blank=True)
     active      = models.BooleanField(default=True)
     patient_per_day = models.IntegerField(default=0)
+
+    is_approved = models.BooleanField(default=False)
+    approved_by = models.ForeignKey(CustomUser,on_delete=models.SET_NULL,null=True,related_name='serviceapproves')
     # Address
     country     = models.ForeignKey(Country,on_delete=models.CASCADE,null=True,blank=True)
     division    = models.ForeignKey(Division,on_delete=models.CASCADE,null=True)

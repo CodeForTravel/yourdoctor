@@ -36,6 +36,7 @@ urlpatterns = [
     path('searchs/', include('searchs.urls', namespace='searchs')),
     path('reviews/', include('reviews.urls', namespace='reviews')),
     path('carts/', include('carts.urls', namespace='carts')),
+    path('staffs/', include('staffs.urls', namespace='staffs')),
 
     
     #path('', include('django.contrib.auth.urls')),  appointment

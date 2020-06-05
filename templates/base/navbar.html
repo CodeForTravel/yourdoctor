@@ -12,6 +12,9 @@
 {% url 'users:user_profile' as user_profile_url %}
 {% url 'appointments:pending_appointment' as appointment_url %}
 {% url 'carts:cart_home' as cart_home_url %}
+{% url 'carts:pending_appointment' as pending_appointments_url %}
+{% url 'staffs:doctor_approval' as doctor_applications %}
+
 
 <style>
     .ui.stackable.secondary.menu a{
@@ -27,6 +30,12 @@
         {% if request.user.user_type == 'doctor' %}
         <a class="item {% if request.path == appointment_url %} active {% endif %}" href="{{ appointment_url }} ">Appointments</a>
         {% endif %}
+
+        {% if request.user.is_staff %}
+        <a class="item {% if request.path == doctor_applications %} active {% endif %}"
+            href="{{ doctor_applications }} ">Doctor Applications</a>
+        {% endif %}
+
         <div class="right menu">
             <div class="item">
                 <div class="ui icon input">
@@ -38,8 +47,11 @@
             <a class="item {% if request.path == cart_home_url %}active {% endif %}" href="{{ cart_home_url }}">
                 <i class="cart plus icon"></i>
             </a>
+
             {% if request.user.is_authenticated %}
-            <a class="item " href="">
+            
+
+            <a class="item {% if request.path == pending_appointments_url %}active {% endif %}" href="{{ pending_appointments_url }}">
                 <i class="ambulance icon"></i>
             </a>
             <a href="{{ logout_url }}"  class="item {% if request.path == logout_url %}active {% endif %}">

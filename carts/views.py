@@ -78,7 +78,7 @@ class CartHomeView(LoginRequiredMixin,View):
 
     template_name = 'carts/cart_home.html'
     def get(self,request):
-        cart_items = CartItem.objects.filter(user=request.user,is_active=True)
+        cart_items = CartItem.objects.filter(user=request.user,is_active=False)
         total = total_cart(cart_items)
         args = {
             'total':total,
@@ -92,5 +92,44 @@ class RemoveCartItem(LoginRequiredMixin,View):
         instance = CartItem.objects.get(id=pk)
         instance.delete()
         return redirect("carts:cart_home")
+
+
+class CheckOutView(LoginRequiredMixin,View):
+    login_url = 'users:login'
+
+    def get(self,request):
+        user = self.request.user
+        print(user)
+        carts = CartItem.objects.filter(
+            user = user,
+            is_active = False,
+            appointment_complete = False
+        )
+        if carts:
+            for item in carts:
+                item.is_active = True
+                item.save()
+
+            return redirect("carts:pending_appointment")
+        return redirect("doctors:doctor_list")
+
+
+class UsersPendingAppointment(LoginRequiredMixin,View):
+    login_url = "users:login"
+    template_name = 'carts/user_pending_appointment.html'
+
+    def get(self,request):
+        user = self.request.user
+        print(user)
+        carts = CartItem.objects.filter(
+            user = user,
+            is_active = True,
+            appointment_complete = False
+        )
+        print(carts)
+        args = {
+            'carts':carts,
+        }
+        return render(request,self.template_name,args)
         
 

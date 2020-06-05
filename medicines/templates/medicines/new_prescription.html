@@ -75,7 +75,9 @@
         {% for medicine in medicines %}
             <div class="ui vartical clearing segment">
                 <h3>{{ medicine.name }}</h3>
-                <a href=""><div class="ui right floated red button">Delete</div></a>
+                
+                <a href=""><div class="ui right floated red button delete_medicine">Delete</div></a>
+
                 <p class="meta">Quantity: {{ medicine.quantity }} &emsp;
                     Taking Time: {{ medicine.taking_time }}
                 </p>
@@ -127,5 +129,6 @@
             .modal('show')
             ;
     })
+
 </script>
 {% endblock %}

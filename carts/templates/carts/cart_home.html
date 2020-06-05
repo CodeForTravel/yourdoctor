@@ -65,9 +65,12 @@
 
                 {% endfor %}
                 <div class="total"><p><span><b>Total</b> : </span> BDT {{ total }} </p></div>
-                <div class="ui inverted green button">
-                    Check-out
-                </div>
+                <a href="{% url 'carts:check_out' %}">
+                    <div class="ui inverted green button">
+                        Check-out
+                    </div>
+                </a>
+                
             </div>
         {% else %}
         <div class="ui segment">
