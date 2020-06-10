@@ -53,61 +53,61 @@
 
 {% block scripts %}
 <script>
-        $('#country_dropdown').dropdown();
-        $('#division_dropdown').dropdown();
-        $('#city_dropdown').dropdown();
+    $('#country_dropdown').dropdown();
+    $('#division_dropdown').dropdown();
+    $('#city_dropdown').dropdown();
+    $('.ui.selection.dropdown').dropdown();
 
-        // $('#country_dropdown').dropdown('set selected', 'Bangladesh');
 
-        $('#country_dropdown').dropdown('setting', 'onChange', function () {
-            $("#division_data").empty();
-            var country_id = $("#country").val()
-            $.ajax({
-                    type: 'get',
-                    url: '{% url "users:division_api" %}',
-                    data: {
-                        'country_id': country_id
-                    },
-                    success:function(data){
-                        division = data.data;
-                        for(var i=0; i<division.length; i++){
-                            division_id = division[i].id;
-                            division_name = division[i].name;
-                            html =  `
-                                <div class="item" data-value="${division_id}"> ${ division_name }</div>
+
+    // $('#country_dropdown').dropdown('set selected', 'Bangladesh');
+
+    $('#country_dropdown').dropdown('setting', 'onChange', function () {
+        $("#division_data").empty();
+        var country_id = $("#country").val()
+        $.ajax({
+            type: 'get',
+            url: '{% url "users:division_api" %}',
+            data: {
+                'country_id': country_id
+            },
+            success: function (data) {
+                division = data.data;
+                for (var i = 0; i < division.length; i++) {
+                    division_id = division[i].id;
+                    division_name = division[i].name;
+                    html = `
+                                <div class="item" data-value="${division_id}"> ${division_name}</div>
                             `
-                            $("#division_data").append(html);
-                        }
-                        
-                    }
-                });
-          });
+                    $("#division_data").append(html);
+                }
 
-            $('#division_dropdown').dropdown('setting', 'onChange', function () {
-                $("#city_data").empty();
-                    var division_id = $("#division").val()
-                    $.ajax({
-                        type: 'get',
-                        url: '{% url "users:city_api" %}',
-                        data: {
-                            'division_id': division_id
-                        },
-                        success: function (data) {
-                            city = data.data;
-                            for (var i = 0; i < city.length; i++) {
-                                city_id = city[i].id;
-                                city_name = city[i].name;
-                                html = `
+            }
+        });
+    });
+
+    $('#division_dropdown').dropdown('setting', 'onChange', function () {
+        $("#city_data").empty();
+        var division_id = $("#division").val()
+        $.ajax({
+            type: 'get',
+            url: '{% url "users:city_api" %}',
+            data: {
+                'division_id': division_id
+            },
+            success: function (data) {
+                city = data.data;
+                for (var i = 0; i < city.length; i++) {
+                    city_id = city[i].id;
+                    city_name = city[i].name;
+                    html = `
                                 <div class="item" data-value="${city_id}"> ${city_name}</div>
                             `
-                                $("#city_data").append(html);
-                            }
-                            city = { }
-                        }
-                    });
-                });
-
-            
-   
+                    $("#city_data").append(html);
+                }
+                city = {}
+            }
+        });
+    });
 </script>
 {% endblock %}

@@ -89,19 +89,11 @@ class DoctorInformationForm(forms.Form):
         info.save()
 
  
-# class FilterForm(forms.Form):
-#     country_choices = [(c.name, c.name) for c in Country.objects.all()]
-#     division_choices = [(d.name, d.name) for d in Division.objects.all()]
-#     city_choices = [(ct.name, ct.name) for ct in City.objects.all()]
-#     # area_choices = [(a.name, a.name) for a in Area.objects.all()]
-#     # address_choices = [(ad.name, ad.name) for ad in Address.objects.all()]
+class FilterForm(forms.Form):
+    
+    area = forms.CharField(label='Area',required=False,
+    widget=forms.TextInput(attrs={'placeholder':'Search by upojila name'}))
 
-#     country = forms.ChoiceField(choices=country_choices,required=False)
-#     division = forms.ChoiceField(choices=division_choices,required=False)
-#     city = forms.ChoiceField(choices=city_choices,required=False)
-#     area = forms.CharField(label='Area',required=False,
-#     widget=forms.TextInput(attrs={'placeholder':'Search by upojila name'}))
-
-#     address = forms.CharField(label='Address',required=False,
-#     widget=forms.TextInput(attrs={'placeholder':'Search by union name'}))
+    address = forms.CharField(label='Address',required=False,
+    widget=forms.TextInput(attrs={'placeholder':'Search by union name'}))
 

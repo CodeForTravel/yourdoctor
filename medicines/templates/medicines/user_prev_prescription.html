@@ -24,9 +24,9 @@
                 <p> {{ appointment.doctor.doctorinfo.current_working_institution }} </p>
             </div>
             <div class="five wide column">
-                <h1>{{ appointment.patient.userinfo.first_name }}
-                    {{ appointment.patient.userinfo.last_name }}</h1>
-                <p>User ID : {{ appointment.patient.user_unique_id }}</p>
+                <h1>{{ appointment.user.userinfo.first_name }}
+                    {{ appointment.user.userinfo.last_name }}</h1>
+                <p>User ID : {{ appointment.user.user_unique_id }}</p>
                 <p>Appointment ID : {{ appointment.appointment_id }}</p>
             </div>
         </div>

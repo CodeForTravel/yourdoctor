@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% block head %}
+<style>
+    .filter_button {
+        padding-top: 24px !important;
+    }
+</style>
+{% endblock %}
+{% block content %}
+
+<!-- Filter the doctors -->
+<div class="ui vertical segment">
+    <div class="ui middle aligned stackable grid">
+    <div class="column">
+        <div class="ui segment">
+            <form method="GET" class="ui form">
+                <div class="ui fields">
+                    <div class="field">
+                        <label>Country:</label>
+                        <div class="ui selection dropdown" id="country_dropdown">
+                            <input type="hidden" name="country" id="country">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">Select country</div>
+                            <div class="menu">
+                                {% for country in countrys %}
+                                <div class="item" data-value="{{ country.id }}">{{ country.name }}</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Division/States:</label>
+                        <div class="ui selection dropdown" id="division_dropdown">
+                            <input type="hidden" name="division" id="division">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">Select country first</div>
+                            <div class="menu" id="division_data">
+                                <!-- Item will be come from jquery -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>City/Town:</label>
+                        <div class="ui selection dropdown" id="city_dropdown">
+                            <input type="hidden" name="city" id="city">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">Select Division before me</div>
+                            <div class="menu" id="city_data">
+                                <!-- Item will be come from jquery -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>{{ form.area.label_tag }}</label>
+                        {{ form.area }}
+                    </div>
+                    <div class="field">
+                        <label>{{ form.address.label_tag }}</label>
+                        {{ form.address }}
+                    </div>
+                </div>
+
+                <div class="field filter_button"><button type="submit" class="ui button">Filter</button></div> 
+            </form>
+        </div>
+    </div>
+</div>
+
+
+    <!-- Showing Doctor list -->
+    <div class="ui middle aligned stackable grid">
+        <div class="ui column">
+            <div class="ui segment">
+                <div class="ui four link cards">
+                    {% for doctor in user_list %}
+                    {% include 'doctors/snippets/card.html' with instance=doctor%}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+    $('#country_dropdown').dropdown();
+    $('#division_dropdown').dropdown();
+    $('#city_dropdown').dropdown();
+    $('.ui.selection.dropdown').dropdown();
+
+    // $('#country_dropdown').dropdown('set selected', 'Bangladesh');
+
+    $('#country_dropdown').dropdown('setting', 'onChange', function () {
+        $("#division_data").empty();
+        var country_id = $("#country").val()
+        $.ajax({
+            type: 'get',
+            url: '{% url "users:division_api" %}',
+            data: {
+                'country_id': country_id
+            },
+            success: function (data) {
+                division = data.data;
+                for (var i = 0; i < division.length; i++) {
+                    division_id = division[i].id;
+                    division_name = division[i].name;
+                    html = `
+                                <div class="item" data-value="${division_id}"> ${division_name}</div>
+                            `
+                    $("#division_data").append(html);
+                }
+
+            }
+        });
+    });
+
+    $('#division_dropdown').dropdown('setting', 'onChange', function () {
+        $("#city_data").empty();
+        var division_id = $("#division").val()
+        $.ajax({
+            type: 'get',
+            url: '{% url "users:city_api" %}',
+            data: {
+                'division_id': division_id
+            },
+            success: function (data) {
+                city = data.data;
+                for (var i = 0; i < city.length; i++) {
+                    city_id = city[i].id;
+                    city_name = city[i].name;
+                    html = `
+                                <div class="item" data-value="${city_id}"> ${city_name}</div>
+                            `
+                    $("#city_data").append(html);
+                }
+                // city = {}
+            }
+        });
+    });
+    
+
+</script>
+
+{% endblock %}

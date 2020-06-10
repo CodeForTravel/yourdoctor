@@ -17,7 +17,10 @@ class ReviewForm(forms.Form):
         comment = self.cleaned_data.get('comment')
         rating = self.cleaned_data.get('rating')
         
-        
+        if rating:
+            if (rating>5 or rating < 1) :
+                raise forms.ValidationError("Your rating must be within 1 to 5")
+
         if not comment and not rating:
             raise forms.ValidationError('Please write your valuable openion!')
 

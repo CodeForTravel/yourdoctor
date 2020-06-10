@@ -46,6 +46,7 @@ urlpatterns = [
 #API URL
     path('api/division/', views.DivisionAPI.as_view(), name='division_api'),
     path('api/city/', views.CityAPI.as_view(), name='city_api'),
+    # path('api/area/', views.AreaAPI.as_view(), name='area_api'),
 
 
    ]

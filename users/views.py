@@ -198,3 +198,19 @@ class CityAPI(APIView):
                 "data": data
             }, status=status.HTTP_200_OK)
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+# class AreaAPI(APIView):
+#     serializer_class = serializers.AreaSerializer
+
+#     def get(self, request):
+#         if request.GET.get("city_id"):
+#             city = get_object_or_404(City, id=request.GET.get("city_id"))
+#             areas = Area.objects.filter(city=city)
+
+#             data = self.serializer_class(areas, many=True).data
+
+#             return Response({
+#                 "data": data
+#             }, status=status.HTTP_200_OK)
+#         return Response(status=status.HTTP_400_BAD_REQUEST)

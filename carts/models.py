@@ -35,6 +35,7 @@ class CartItem(models.Model):
     appointment_schedule = models.ForeignKey(AppointmentSchedule,on_delete=models.SET_NULL,null=True,related_name='appointment_schedules')
     appointment_fee = models.DecimalField(decimal_places=2, max_digits=10, default='00.00')
     appointment_complete = models.BooleanField(default=False)
+    is_reviewed = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
     created_at  = models.DateTimeField(auto_now_add=True)
     updated_at  = models.DateTimeField(auto_now=True)

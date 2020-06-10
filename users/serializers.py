@@ -22,3 +22,8 @@ class CitySerializer(serializers.ModelSerializer):
     class Meta:
         model = City
         fields = ("id", "name")
+
+# class AreaSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Area
+#         fields = ("id", "name")

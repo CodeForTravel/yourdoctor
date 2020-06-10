@@ -47,7 +47,10 @@ class UserPreviousPrescription(LoginRequiredMixin,View):
             raise Http404
 
         user = CustomUser.objects.get(id=request.user.id)
-        appointments = CartItem.objects.filter(user=user)
+        appointments = CartItem.objects.filter(
+            user=user,
+            appointment_complete = True
+            )
 
         args = {
             'user':user,
