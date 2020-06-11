@@ -9,7 +9,10 @@ from medicines.models import Medicine
 from users.models import CustomUser
 from . import forms
 
-class NewPrescriptionView(View):
+class NewPrescriptionView(LoginRequiredMixin,UserPassesTestMixin,View):
+    login_url = 'users:login'
+    def test_func(self):
+        return self.request.user.is_doctor
     template_name = 'medicines/new_prescription.html'
     def get(self,request,appointment_id):
         form = forms.AddMedicineForm()

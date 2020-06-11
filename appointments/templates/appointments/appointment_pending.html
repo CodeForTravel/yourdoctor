@@ -20,10 +20,13 @@
             <div class="thirteen wide column">
                 {% for schedule in schedules %}
                 <div class="ui bottom attached tab " data-tab="{{ schedule.id }}">
+                    <div class="ui vertical clearing segment">
+                        <a href="{% url 'appointments:make_schedule_complete' schedule.id %}"><div class="ui right floated red button">Make Schedule Complete</div></a>
+                    </div>
                     {% for item in items %}
                         {% if item.appointment_schedule == schedule %}
                             <div class="ui clearing segment">
-                                <a href=""> {{ item.user.userinfo.first_name }} {{ item.user.userinfo.last_name }}</a>
+                                <a href="{% url 'users:user_detail' item.user.id %}"> {{ item.user.userinfo.first_name }} {{ item.user.userinfo.last_name }}</a>
                                 <h4>Appointment ID : {{ item.appointment_id }}</h4>
                                 <h4>Appointment Type: {{ item.appointment_type }}</h4>
                                 <a href="{% url 'appointments:previous_treatment' item.appointment_id %}">
@@ -35,6 +38,7 @@
                             </div>
                         {% endif %}
                     {% endfor %}
+
                 </div>
                 {% endfor %}
             </div>
@@ -48,6 +52,7 @@
 
 {% block scripts %}
 <script>
+    
     $('.menu .item')
             .tab()
             ;

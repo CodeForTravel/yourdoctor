@@ -116,7 +116,7 @@
                                 <p>Report Show Appointment : BDT {{ service.servicefee.report_appointment_fee}}</p>
                             </div>
                             <div class="three wide column">
-                                <a href=""><button class="ui button">Edit Service</button></a>
+                                <a href="{% url 'services:service_edit' service.id %}"><button class="ui button">Edit Service</button></a>
                             </div>
                         </div> 
                     </div>  

@@ -3,7 +3,6 @@ from services.models import Service,ServiceFee
 from addresses.models import Country,Division,City,Area,Address
 
 
-
 class DoctorServiceForm(forms.Form):
     DAY_CHOICES  = (
         ('Saturday','Saturday'),

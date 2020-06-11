@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block head %}
+<style>
+    img{
+        width: 250px !important;
+        height: 275px !important;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="ui vertical clearing segment">
+    <div class="ui stackable grid">
+        <div class="two column row">
+            <div class="ui segment">
+                <div class="ui four wide column">
+                    <img src="{{ user.userinfo.image.url }}" alt="">
+                </div>
+                <div class="ui twelve wide column">
+                    <h1>{{ user.userinfo.first_name }} {{ user.userinfo.last_name }}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

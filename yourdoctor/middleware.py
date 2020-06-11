@@ -13,14 +13,13 @@ class ReviewMiddleware:
 
     def process_view(self,request, view_func, view_args, view_kwargs):
         if request.user.is_authenticated:
-            print(request.user)
             items = CartItem.objects.filter(
                 user = request.user,
                 appointment_complete = True,
                 is_reviewed = False
                 )
-            if items:
-                print(items)
+            # if items:
+                # print(items)
                 # return redirect("reviews:review_form")
         else:
             print("User is not authenticated!")

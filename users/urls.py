@@ -48,5 +48,6 @@ urlpatterns = [
     path('api/city/', views.CityAPI.as_view(), name='city_api'),
     # path('api/area/', views.AreaAPI.as_view(), name='area_api'),
 
-
+#Only For Doctor
+    path('patient/detail/<int:pk>/',views.UserDetailView.as_view(),name='user_detail')
    ]

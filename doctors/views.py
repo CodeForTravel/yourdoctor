@@ -7,11 +7,12 @@ from doctors.models import DoctorInfo,Speciality,Experience
 # from users.models import UserInfo
 from services.models import Service
 from degrees.models import Degree
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from addresses.models import Country
 
 
 class DoctorInformationView(LoginRequiredMixin,View):
+    login_url = 'users:login'
     template_name = 'doctors/doctor_information_form.html'
     
     def get(self,request):
@@ -35,23 +36,11 @@ class DoctorInformationView(LoginRequiredMixin,View):
 
 
 
-# class DoctorListView(View):
-#     template_name = 'doctors/doctor_list.html'
-#     def get(self,request):
-#         user_list = CustomUser.objects.all().filter(user_type__iexact = 'doctor')
-        
-#         args = {
-#             'user_list': user_list,
-            
-#         }
-#         return render(request, self.template_name, args)
-
-
 class DoctorDetailView(View):
     template_name = 'doctors/doctor_detail.html'
     def get(self,request,pk):
         doctor = CustomUser.objects.get(pk=pk)
-        degrees = Degree.objects.all().filter(user=doctor)
+        degrees = Degree.objects.all().filter(user=doctor,is_approved=True)
         address = UserAddress.objects.get(user=doctor)
         args = {
             'address':address,
@@ -76,15 +65,9 @@ class DoctorListView(View):
         city = request.GET.get('city')
         area = request.GET.get('area')
         address = request.GET.get('address')
-        # print("Country : " +str(country))
-        # print("Division : " +str(division))
-        # print("City : " +str(city))
-        # print("Area : " +str(area))
-        # print("Address : " +str(address))
 
-        
         #actual search filtering 
-        user_list = CustomUser.objects.filter(user_type='doctor')
+        user_list = CustomUser.objects.filter(user_type='doctor',is_doctor=True)
         if is_valid_param(country):
             user_list = user_list.filter(service__country__id=country).distinct()
         if is_valid_param(division):

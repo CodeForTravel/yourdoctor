@@ -1,5 +1,5 @@
 from django.db import models
-from appointments.models import CartItem
+from carts.models import CartItem
 
 class Medicine(models.Model):
     cart = models.ForeignKey(CartItem,on_delete=models.CASCADE,null=True,blank=True,related_name='medicines')

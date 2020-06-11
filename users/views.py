@@ -20,7 +20,6 @@ from rest_framework import status
 from . import serializers
         
 
-
 class Registration(View):
     template_name = 'users/registration.html'
 
@@ -67,7 +66,16 @@ class UserProfileView(LoginRequiredMixin,View):
         }
         return render(request,self.template_name,args)
 
+class UserDetailView(LoginRequiredMixin,View):
+    login_url = 'users:login'
+    template_name = 'users/user_detail.html'
 
+    def get(self,request,pk):
+        user = CustomUser.objects.get(id=pk)
+        args = {
+            'user':user
+        }
+        return render(request,self.template_name,args)
 
 class PasswordResetView(auth_views.PasswordResetView):
     template_name = 'users/password_reset.html'

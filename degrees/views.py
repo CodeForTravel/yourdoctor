@@ -1,9 +1,12 @@
 from django.shortcuts import render,redirect
 from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from . import forms
 # Create your views here.
 
-class DegreeFormView(View):
+class DegreeFormView(LoginRequiredMixin,View):
+    login_url = 'users:login'
+    
     template_name = 'degrees/degree_form.html'
 
     def get(self,request):
