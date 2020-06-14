@@ -83,6 +83,7 @@ class UserInfo(models.Model):
     gender       = models.CharField(max_length=10,choices=GENDER_CHOICES)
     image        = models.ImageField(upload_to='user_image/',blank=True,null=True)
     complete     = models.BooleanField(default=False)
+    dob          = models.DateField(null=True,blank=True)
 
     def __str__(self):
         return self.user.email

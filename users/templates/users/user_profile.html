@@ -27,9 +27,8 @@
                     </a>
                 </div>
             </div>
-
         </div>
-
+<!-- Personal Informations -->
         <div class="ui stackable grid">
             <div class="row">
             <div class="column">
@@ -39,6 +38,8 @@
                     <h4>Gender : {{ user.userinfo.gender }}</h4>
                     <h4>Email : {{ user.email }}</h4>
                     <h4>User type : {{ user.user_type }}</h4>
+                    <h4>Date Of Birth : {{ user.dob }} </h4>
+                    
                     <button class="ui right floated button">
                         <a href="{% url 'users:edit_user_info' %}">Edit your profile</a>
                     </button>
@@ -54,10 +55,12 @@
                         <h4>State/Divivsion : {{ user_address.division.name }}</h4>
                         <h4>City/Town : {{ user_address.city.name }}</h4>
                         {{ user_address.area.name }} , {{ user_address.address.name }}
-
+                        
                         <button class="ui right floated button">
-                            <a href="{% url 'users:user_address_form' %}">Add your address</a>
+                            <a href="{% url 'users:user_address_form' %}">Edit address</a>
                         </button>
+                        
+                        
                     </div>
                 </div>
             </div>
@@ -124,7 +127,7 @@
                 {% endfor %}
             {% endif %}
                 <div class="ui right floated button">
-                    <a href="{% url 'services:doctor_service_form' %}">Add Service</a>
+                    <a href="{% url 'services:doctor_service_form' %}">Add New Service</a>
                 </div>
             </div>
 

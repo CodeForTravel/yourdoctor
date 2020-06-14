@@ -55,8 +55,8 @@ class UserProfileView(LoginRequiredMixin,View):
     template_name = 'users/user_profile.html'
     def get(self,request):
         user = request.user
-        degrees = Degree.objects.filter(user=user)
-        services = Service.objects.filter(user=user)
+        degrees = Degree.objects.filter(user=user,is_approved=True)
+        services = Service.objects.filter(user=user,is_approved=True)
         user_address = models.UserAddress.objects.get(user=request.user)
         args = {
             'user_address':user_address,

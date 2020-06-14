@@ -1,1 +1,93 @@
-<h1>This is the footer</h1>
+
+{% load static %}
+<style>
+    .footer_class{
+         background-color: rgb(23, 201, 159); padding: 20px;
+    }
+    .ui.link.list a{
+        color: white !important;
+        padding: 5px !important;
+    }
+    .ui.link.list a:hover {
+        color: rgb(49, 53, 62) !important;
+        font-size: 15px !important;
+    }
+    .follow_class { 
+        
+        width: 100% !important;
+        float: right !important;
+    }
+    .follow_class a > img{
+        display: inline !important;
+        padding: 5px !important;
+    }
+    .copy_right{
+        text-align: center !important;
+        width: 100% !important;
+    }
+</style>
+<div class="footer_class">
+    <div class="ui vertical segment footer_seg">
+        <div class="ui container">
+            <div class="ui middle aligned stackable grid">
+                <div class="row">
+                    <div class="four wide column">
+                        <h4>Contact us</h4>
+                        <div class="ui link list">
+                            <a class="item">Doctor</a>
+                            <a class="item">About</a>
+                            <a class="item">Jobs</a>
+                            <a class="item">Team</a>
+                        </div>
+                    </div>
+                    <div class="four wide column">
+                        <h4>Contact us</h4>
+                        <div class="ui link list">
+                            <a class="item">Doctor</a>
+                            <a class="item">About</a>
+                            <a class="item">Jobs</a>
+                            <a class="item">Team</a>
+                        </div>
+                    </div>
+                    <div class="four wide column">
+                        <h4>Contact us</h4>
+                        <div class="ui link list">
+                            <a class="item">Doctor</a>
+                            <a class="item">About</a>
+                            <a class="item">Jobs</a>
+                            <a class="item">Team</a>
+                        </div>
+                    </div>
+                    <div class="four wide column">
+                        <div class="ui link list">
+                            <h4>Contact us</h4>
+                            <a class="item">Doctor</a>
+                            <a class="item">About</a>
+                            <a class="item">Jobs</a>
+                            <a class="item">Team</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui horizontal divider">More info</div>
+                <div class="row">
+                    <div class="column">
+                        <div class="follow_class">
+                            <a href="https://www.instagram.com/__faisal___00___/"><img class="ui mini circular image" src="{% static 'image/instagram-sketched.png' %}"></a>
+                            <a href="https://web.facebook.com/profile.php?id=100007482271315"><img class="ui mini circular image" src="{% static 'image/facebook.png' %}"></a>
+                            <a href=""><img class="ui mini circular image" src="{% static 'image/twitter.png' %}"></a>
+                            <a href=""><img class="ui mini circular image" src="{% static 'image/tumblr.png' %}"></a>
+                            <a href=""><img class="ui mini circular image" src="{% static 'image/youtube.png' %}"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="column copy_right">
+                        <p>Copyright&copy; 2020 by yourdoctor </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

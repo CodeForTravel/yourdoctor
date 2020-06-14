@@ -25,21 +25,23 @@
            min-height: 600px;
            background-color: lavender;
        }
-       .ui.vertical.segment.footer_section{
-           margin: 10px;
-           padding: 10px;
-       }
+       
     </style>
     {% include 'base/css.html' %}
     {% block head %} {% endblock %}
 </head>
 
 <body>
+<div class="wrapper_class">
+
+
+<!-- navbar section -->
 <div class="ui vertical center aligned segment base_header">
     {% include 'base/navbar.html' %}
 </div>
 
 
+<!-- message section -->
 {% if messages %}
 <div class="ui messages modal">
     <i class="close icon"></i>
@@ -58,6 +60,9 @@
 </div>
 {% endif %}
 
+
+
+<!-- main content -->
 <div class="ui vertical segment main_section">
     <div class="ui middle aligned stackable grid">
         <div class="ui container">
@@ -66,30 +71,25 @@
     </div>
 </div>
 
-<div class="ui container">
-<div class="ui vertical segment footer_section">
-    <div class="ui middle aligned stackable grid">
-        
-            {% block footer %}
-            {% include 'base/footer.html' %}
-            {% endblock %}
-        </div>
-    </div>
-</div>
-  
+
+
+
+<!-- footer section -->
+{% block footer %}
+{% include 'base/footer.html' %}
+{% endblock %}
+
 
 
     {% include 'base/js.html' %}
-    
-    {% block scripts %}
-        
-    {% endblock %}
+    {% block scripts %}  {% endblock %}
 
     <script>
         $('.ui.messages.modal')
             .modal('show');
     </script>
-    
+
+</div>
 </body>
 
 </html>
