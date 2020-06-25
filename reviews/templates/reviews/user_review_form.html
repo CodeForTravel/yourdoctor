@@ -8,8 +8,8 @@
                 <form method="POST">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <div class="ui star rating" data-rating="3"></div>
-                    <button type="submit">submit</button>
+                    <div class="ui star rating" data-rating="3" name="data_rating"></div>
+                    <button type="submit">Submit</button>
                 </form>
             </div>
         </div>

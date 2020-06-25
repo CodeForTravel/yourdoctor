@@ -4,7 +4,6 @@
       
     </style>
 {% endblock %}
-
     
 {% block content %}
 <div class="ui vertical segment">
@@ -21,14 +20,21 @@
             <h1>{{ doctor.userinfo.first_name }} {{ doctor.userinfo.last_name }}</h1>
             <div class="meta">
                 {% for degree in degrees %}
-                {{ degree.name }},
+
+                {{ degree.name }}
+                {% if degree.subject %}
+                ({{ degree.subject }})
+                {% endif %},
+
                 {% endfor %}
             </div>
             <br>
-            
-            <p>{{ doctor.doctorinfo.current_position }} </p>
-            <p>Department of {{ doctor.doctorinfo.current_working_department }} </p>
-            <p> {{ doctor.doctorinfo.current_working_institution }} </p>
+            {% if specialitys %}
+            <p>Expertise : {% for sp in specialitys %}{{sp.speciality}},{% endfor %}</p>
+            {% endif %}
+            <p>Designation : {{ doctor.doctorinfo.current_position }} </p>
+            <p>Department : {{ doctor.doctorinfo.current_working_department }} </p>
+            <p>Institution : {{ doctor.doctorinfo.current_working_institution }} </p>
             <button class="ui button">
                 <a href="{% url 'appointments:appointment_schedule' doctor.pk %}">Schedule</a>
             </button>
@@ -44,7 +50,7 @@
                 <a class="active item" data-tab="first">Personal Information</a>
                 <a class="item" data-tab="second">Medical Information</a>
                 <a class="item" data-tab="third">Graduation Information</a>
-                <a class="item" data-tab="fourth">Speciality</a>
+                <a class="item" data-tab="Speciality">Speciality</a>
                 <a class="item" data-tab="fifth">Experiences</a>
             </div>
 
@@ -66,7 +72,11 @@
             <div class="ui bottom attached tab segment" data-tab="third">
                     {% if degrees %}
                     {% for degree in degrees %}
-                    <h3>{{ degree.name }}</h3>
+                    <h3>{{ degree.name }}
+                        {% if degree.subject %}
+                        ({{ degree.subject }})
+                        {% endif %}
+                    </h3>
                     <h5>{{ degree.institution_name }}</h5>
                     <h5>{{ degree.starting_time }}</h5>
                     <h5>{{ degree.ending_time }}</h5>
@@ -74,7 +84,18 @@
                     {% endfor %}
                     {% endif %}
             </div>
-            <div class="ui bottom attached tab segment" data-tab="fourth"></div>
+            <div class="ui bottom attached tab segment" data-tab="Speciality">
+                {% if specialitys %}
+                {% for speciality in specialitys %}
+                <h3>{{ speciality.speciality }}
+                </h3>
+                <h5>Description of Speciality : </h5> <p>{{ speciality.speciality_details }}</p>
+                <h5>{{ speciality.start_time }}</h5>
+                <h5>{{ speciality.end_time }}</h5>
+                <br><br>
+                {% endfor %}
+                {% endif %}
+            </div>
             <div class="ui bottom attached tab segment" data-tab="fifth"></div>
     </div>
 </div>

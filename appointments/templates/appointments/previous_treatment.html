@@ -1,12 +1,21 @@
 {% extends 'base.html' %}
-{% block content %}
 
+{% block head %}
+<style>
+    .user_img {
+        width: 250px !important;
+        height: 275px !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
 <div class="ui vertical segment">
 {% for appointment in appointments %}
 <div class="ui clearing segment">
     <div class="ui stackable grid">
         <div class="five wide column">
-            <img src="{{ appointment.doctor.userinfo.image.url }}" alt="">
+            <img src="{{ appointment.doctor.userinfo.image.url }}" alt="" class="user_img">
         </div>
         <div class="six wide column">
             <h1>Dr. {{ appointment.doctor.userinfo.first_name }} {{ appointment.doctor.userinfo.last_name }}</h1>

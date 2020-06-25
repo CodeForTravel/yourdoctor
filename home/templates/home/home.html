@@ -1,14 +1,16 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Base Template </title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <style>
+        .wrapper_class{
+            margin: 0 !important;
+            padding: 0 !important;
+        }
         .ui.vertical.center.aligned.segment.home_head{
             height: 600px !important;
         background-image: linear-gradient(
@@ -37,6 +39,122 @@
             font-size: 6vh;
             color:#eee;
           }
+          .video_row{
+              margin-top: 50px !important;
+              text-align: center !important;
+              padding: 10px !important;
+          }
+          .video_col{
+            float: left !important;
+            clear: left;
+          }
+          .des_col{
+              float: right !important;
+              clear: both !important;
+              width: 50% !important;
+              padding: 10px !important;
+              text-align: center !important;
+          }
+          .des_col p{
+              padding: 10px !important;
+              color: darkslategray !important;
+              font-size: 18px !important;
+              text-align: center !important;
+              font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+              
+          }
+          .des_col button{
+            padding: 15px !important;
+            width: 150px !important;
+            background-color: rgb(21, 160, 160) !important;
+          }
+          .des_col button:hover{
+              background-color: rgba(40,180,131,0.8) !important;
+          }
+          .video_col video{
+              max-width: 520px !important;
+              max-height: 300px !important ;
+          }
+          .gap{
+              margin-top: 30px !important;
+              width: 100% !important;
+              height: 300px !important;
+              background-image: linear-gradient(
+            to right bottom,
+            rgba(191, 243, 212, 0.605),
+            rgba(110, 206, 172, 0.8)),
+            url("{% static 'image/laboratory-flask.jpg' %}");
+            background-size: cover;
+          }
+          .image_row{
+              margin-top: 50px !important;
+              text-align: center !important;
+          }
+          .image_col img{
+              height: 350px !important;
+              width: 95% !important;
+              margin:auto !important;
+          }
+          .des_col h4{ 
+              font-size: 30px !important;
+              text-align: center !important;
+              text-shadow: black !important;
+              letter-spacing: 3px !important;
+              text-transform: uppercase !important; 
+              font-family: sans-serif !important;
+          }
+          .news_heading{
+              margin-top: 50px !important;
+              text-align: center !important;
+              width: 100% !important;
+              margin-bottom: 15px !important;
+              
+          }
+          .news_heading h4{
+              text-shadow:goldenrod !important;
+              letter-spacing: 3px !important;
+              text-transform: uppercase !important; 
+              font-family: sans-serif !important;
+              font-size: 30px !important;
+              padding: 10px !important;
+          }
+          .news_row{
+            margin: 10px !important;
+          }
+          .video_news_col video{
+              width: 90% !important;
+              height: 300px !important ;
+             
+          }
+          .image_news_col img{
+              width: 90% !important;
+              height: 300px !important ;  
+          }
+          .news_row h4{
+              letter-spacing: 3px !important;
+              font-family: 'Times New Roman', Times, serif;
+              font-size: 20px !important;
+          }
+          .news_row p{
+              color: darkslategray !important;
+              font-size: 15px !important;
+              font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+          }
+          .list_class{
+            text-align: left !important;
+            margin: 5% 28% 5% 28% !important;
+            font-size: 18px !important;
+            letter-spacing: 1px;
+            font-family: 'Times New Roman', Times, serif;
+           
+          }
+          .list_class a{
+               color:rgb(25, 11, 4) !important;
+          }
+          .list_class a:hover{
+              font-size: 20px !important;
+              color: rgb(66, 8, 8);
+          }
 
     </style>
     
@@ -44,37 +162,182 @@
 </head>
 
 <body>
-<div class="ui vertical center aligned segment home_head">
-    <div class="ui container grid">
-        <div>{% include 'base/navbar.html' %}</div>
-        <div class="home_quotes">
-            <p>
-                <span>&#8220;</span>He who has health has hope; and he who has hope has everything.<span>&#8221;</span>
-                 <span class="writer">~Arabian proverb</span></p>
-             
+<div class="wrapper_class">
+<!-- header sction -->
+    <div class="ui vertical center aligned segment home_head">
+        <div class="ui container grid">
+            <div>{% include 'base/navbar.html' %}</div>
+            <div class="home_quotes">
+                <p>
+                    <span>&#8220;</span>He who has health has hope; and he who has hope has everything.<span>&#8221;</span>
+                    <span class="writer">~Arabian proverb</span></p>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="ui vertical segment main_section">
-    <div class="ui middle aligned stackable grid">
+
+<!-- main section -->
+    <div class="ui vertical segment main_section">
         <div class="ui container">
-            <h2>Welcome to home page</h2>
+            <div class="ui stackable grid">
+                <!-- video row -->
+                <div class="row video_row">
+                    <div class="eight wide column video_col">
+                        <video controls>
+                            <source src="{% static 'videos/health.mp4' %}" type="video/mp4">
+                            <source src="{% static 'videos/health.ogg' %}" type="video/ogg">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="eight wide column des_col">
+                        <h4>Healthy Lifestyle</h4>
+                        <div class="ui divider"></div>
+                        <p>Eat a variety of foods.
+                        Base your diet on plenty of foods rich in carbohydrates.
+                        Replace saturated with unsaturated fat.
+                        Enjoy plenty of fruits and vegetables.
+                        Reduce salt and sugar intake.
+                        Eat regularly, control the portion size.
+                        Drink plenty of fluids.
+                        Maintain a healthy body weight.</p>
+                        <button class="circular ui button">
+                            Lear More
+                        </button>
+                    </div>
+                </div>
+                
+
+
+                <!-- Medical specialit -->
+                <div class="row gap">
+                    <div class="left floated eight wide column des_col">
+                        <h4>Medical Specialis</h4>
+                        <p>A medical specialty is a branch of medical practice that
+                             is focused on a defined group of patients, diseases, skills, or
+                        philosophy. Examples include children, cancer,
+                         laboratory medicine, or primary care.</p>
+                        <button class="circular ui button">
+                            Find a Specialist
+                        </button>
+                    </div>
+                    <div class="right floated eight wide column des_col">
+                        <h4>Our Specialist</h4>
+                        <div class="list_class">
+                            <div class="ui list">
+                                <a class="item">
+                                    <i class="right arrow icon"></i>
+                                    <div class="content">
+                                        Dermatologists
+                                    </div>
+                                </a>
+                                <a class="item">
+                                    <i class="right arrow icon"></i>
+                                    <div class="content">
+                                        Endocrinologists
+                                    </div>
+                                </a>
+                                <a class="item">
+                                    <i class="right arrow icon"></i>
+                                    <div class="content">
+                                        Cardiologists
+                                    </div>
+                                </a>
+                            </div>
+                            <button class="ui circular labeled icon button">
+                                <i class="arrow alternate circle right icon"></i>
+                                See More?
+                            </button>
+
+                        </div>
+                    </div>
+                    
+                </div>
+
+
+                <!-- Find a doctor row / image row  -->
+                <div class="row image_row">
+                    <div class="left floated eight wide column des_col">
+                        <h4>Find Your Doctor</h4>
+                        <p>Choosing a doctor or another type of health professional 
+                            to help with your health care is very important. Never before
+                        have people had so many kinds of doctors and other health
+                         professionals to choose from. The relationship you have with
+                        your health professional greatly influences the health decisions 
+                        you make and, ultimately, your health.</p>
+                        <a href="{% url 'doctors:doctor_list'%}">
+                            <button class="circular ui button">
+                                Find a Doctor 
+                            </button>
+                        </a>
+                    </div>
+                    <div class="right floated eight wide column image_col">
+                        <img class="ui fluid image" src="{% static 'image/doctors.jpg' %}">
+                    </div>
+                </div>
+
+
+                <!-- news section -->
+                <div class="news_heading">
+                    <div class="ui dividing header"><h4>News and Media</h4></div>
+                </div>
+                <div class="row news_row">
+                    <div class="ui eight wide column image_news_col">
+                        <img class="ui medium image" src="{% static 'image/bamboo.jpg' %}">
+                        <h4>Bamboo as Medicne</h4>
+                        <p>Bamboo is best known for its hard stems (culms) that are used in place 
+                            of wood for a variety of applications, including
+                        furniture, scaffolding, flutes, fence posts, flooring, and even 
+                        bicycle frames. Bamboos also serve as decorative plants,
+                        the source of tender shoots used in Chinese cuisine,
+                         and a primary subject of many Chinese artworks. Early Chinese books
+                        were written on bamboo slats and bamboo has been used 
+                        as a source of medicine since ancient times.</p>
+                    </div>
+                    <div class="ui eight wide column video_news_col">
+                        <video controls>
+                            <source src="{% static 'videos/covid.mp4' %}" type="video/mp4">
+                            <source src="{% static 'videos/covid.ogg' %}" type="video/ogg">
+                            Your browser does not support the video tag.
+                        </video>
+                        <h4>Chinese COVID Vaccine Promising in Early Trial in People</h4>
+                        <p>FRIDAY, May 22, 2020 (HealthDay News)
+                             -- Another COVID-19 vaccine candidate has achieved good early results, 
+                             a research
+                        team in China reported Friday.
+                        
+                        The experimental vaccine produced important signs of immune 
+                        response in a small group of adults, a sign that it could
+                        potentially protect people against COVID-19, researchers
+                         reported May 22 online in The Lancet medical journal.
+                        
+                        "These results represent an important milestone," 
+                        researcher Wei Chen, part of a team with the Beijing Institute of
+                        Biotechnology, said in a journal news release.
+                        
+                        "However, these results should be interpreted cautiously," Chen continued. 
+                        "The challenges in the development of a
+                        COVD-19 vaccine are unprecedented, and the ability to trigger these
+                         immune responses does not necessarily indicate that
+                        the vaccine will protect humans from COVID-19."</p>
+                    </div>
+                </div>
+               
+
+
+
+
+            </div>
         </div>
     </div>
-</div>
-        
-<!-- <div class="ui vertical segment footer_section">
-    <div class="ui middle aligned stackable grid">
-        <div class="ui container">
-    
-        </div>
-    </div> 
-</div> -->
+
+
+
+<!-- footer section -->
 {% include 'base/footer.html' %}
         
-        
+     
 {% include 'base/js.html' %}
+</div>
 </body>
 
 </html>

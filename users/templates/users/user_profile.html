@@ -76,7 +76,11 @@
                     </div>
                     {% for degree in degrees %}
                     <div class="ui clearing segment">
-                        <h1>{{ degree.name }}</h1>
+                        <h1>{{ degree.name }}
+                            {% if degree.subject %}
+                            ({{ degree.subject }})
+                            {% endif %}
+                        </h1>
                         <p>{{ degree.institution_name }}</p>
                         {{ degree.starting_time }} <span> &emsp; To &emsp;</span>
                         {{ degree.ending_time }}
@@ -89,6 +93,31 @@
             </div>
         </div>
 
+        <!-- speciality section -->
+        <div class="ui stackable grid">
+            <div class="column">
+                <div class="ui clearing segment">
+                    <div style="text-align: center;">
+                        <h1>Your Speciality </h1>
+                    </div>
+                    {% if specialitys %}
+                    {% for speciality in specialitys %}
+                    <div class="ui clearing segment">
+                        <h1>{{ speciality.speciality }}
+                            
+                        </h1>
+                        <p>{{ speciality.speciality_details }}</p>
+                        {{ speciality.start_time }} <span> &emsp; To &emsp;</span>
+                        {{ speciality.end_time }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    <div class="ui right floated button">
+                        <a href="{% url 'doctors:speciality_form' %}">Add Your Speciality</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- for service info -->
         
 

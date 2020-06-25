@@ -9,6 +9,10 @@ class DegreeForm(forms.Form):
     name             = forms.CharField(label='Name Of Degree',
         max_length=50,required=False,
         widget=forms.TextInput(attrs={'placeholder':'MBBS/BDS/FCPS/MD/MS/MRCP/FRCP...'}))
+    
+    subject = forms.CharField(label='Subject of Degree',
+        max_length=50,required=False,
+        widget=forms.TextInput(attrs={'placeholder':'Health(If possible)'}))
 
     institution_name = forms.CharField(label='Name Of Institution',
         max_length=200,required=False,
@@ -39,8 +43,11 @@ class DegreeForm(forms.Form):
         institution_name = self.cleaned_data.get('institution_name')
         starting_time    = self.cleaned_data.get('starting_time')
         ending_time      = self.cleaned_data.get('ending_time')
+        subject          = self.cleaned_data.get('subject')
+
 
         degree = Degree(
+            subject=subject,
             user = request.user,
             name=name,
             institution_name = institution_name,

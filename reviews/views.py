@@ -15,6 +15,8 @@ class ReviewFormView(LoginRequiredMixin,View):
 
     def post(self,request):
         form = forms.ReviewForm(request.POST or None)
+        data_rating = request.POST.get('data_rating')
+        print(data_rating)
         if form.is_valid():
             form.deploy()
         args = {

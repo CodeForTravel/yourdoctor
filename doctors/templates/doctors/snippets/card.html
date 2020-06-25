@@ -1,26 +1,67 @@
 
+<div class="ui card" style="width: 220px;">
 
-<div class="ui card" style="width: 230px; height: auto;">
+    <div class="image" >
+        <img src="{{ doctor.userinfo.image.url }}" style="height: 240px;">
+    </div>
+
+
+    <div class="content">
+        <a href="{% url 'doctors:doctor_detail' pk=doctor.pk %}"  class="header">
+            {{ doctor.userinfo.first_name }}
+            {{ doctor.userinfo.last_name }}
+        </a>
+
+        <!-- Doctor Speciality  -->
+        <div class="meta">
+            {% for sp in specialitys %}
+                {% if sp.user == doctor %}
+                    {{ sp }}
+                {% endif %}
+            {% endfor %}
+        </div>
+        
+        <!-- Doctor Degrees -->
+        <div class="description">
+            {% for dg in degrees %}
+            {% if dg.user == doctor %}
+            {{ dg.name }}
+
+            {% if dg.subject %}
+            ({{ dg.subject }})
+            {% endif %}
+            ,
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="extra content">
+        <a href="{% url 'appointments:appointment_schedule' doctor.pk %}">
+            <button class="ui fluid green button">Schedule</button>
+        </a>
+    </div>
+</div>
+</a>
+
+<!-- <div class="ui card" style="width: 210px; height: auto;">
     {% if doctor.userinfo.image %}
     <div class="image">
         <a href="{% url 'doctors:doctor_detail' pk=doctor.pk %}">
-        <img src="{{ doctor.userinfo.image.url }}" style="width: 230px; height: 250px;">
+        <img src="{{ doctor.userinfo.image.url }}" style="width: 210px; height: 230px;">
         </a>
     </div>
     {% endif %}
     <div class="content">
         <a href="{% url 'doctors:doctor_detail' pk=doctor.pk %}" class="header">{{ doctor.userinfo.first_name }} {{ doctor.userinfo.last_name }}</a>
         <div class="meta">
-            <span class="date">{{ doctor.doctorinfo.speciality  }}</</span>
+            <span class="date"></</span>
         </div>
-        <!-- <div class="description">
-        {{ doctor.doctorinfo.speciality_details }}
-        </div> -->
     </div>
     <div class="extra content">
         <a href="{% url 'appointments:appointment_schedule' doctor.pk %}">
             <button class="ui button">Schedule</button>
         </a>
     </div>
-</div>
+</div> -->
 

@@ -97,3 +97,43 @@ class FilterForm(forms.Form):
     address = forms.CharField(label='Address',required=False,
     widget=forms.TextInput(attrs={'placeholder':'Search by union name'}))
 
+
+
+class SpecialityForm(forms.Form):
+    name             = forms.CharField(label='Name Of Speciality',
+        max_length=50,required=False,
+        widget=forms.TextInput(attrs={'placeholder':'Cardiologists'}))
+    
+    speciality_details = forms.CharField(label='Details Of Speciality',
+        max_length=400,required=False,
+        widget=forms.Textarea(attrs={'placeholder':'Explain your speciality within 400 letter'}))
+
+    start_time    = forms.DateTimeField(label='Starting Time Of Speciality',
+        widget=forms.TextInput(attrs={'placeholder':'2015-2-12'})
+    )
+    
+    end_time      = forms.DateTimeField(label='Completion Time Of Speciality',
+        widget=forms.TextInput(attrs={'placeholder':'2020-4-12'})
+    )
+
+    def clean(self):
+        name             = self.cleaned_data.get('name')
+        if not name:
+            raise forms.ValidationError('put your graduation name!')
+
+    def deploy(self,request):
+        name             = self.cleaned_data.get('name')
+        speciality_details = self.cleaned_data.get('speciality_details')
+        start_time    = self.cleaned_data.get('start_time')
+        end_time      = self.cleaned_data.get('end_time')
+
+
+        speciality = models.Speciality(
+            user = request.user,
+            speciality=name,
+            speciality_details = speciality_details,
+            start_time = start_time,
+            end_time = end_time
+        )
+        speciality.save()
+

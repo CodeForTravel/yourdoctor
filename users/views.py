@@ -9,6 +9,7 @@ from users.models import CustomUser,UserInfo
 from django.contrib.auth.mixins import LoginRequiredMixin
 from degrees.models import Degree
 from services.models import Service
+from doctors.models import Speciality
 from addresses.models import Country,Division,City,Area,Address
 from . import models
 
@@ -57,8 +58,10 @@ class UserProfileView(LoginRequiredMixin,View):
         user = request.user
         degrees = Degree.objects.filter(user=user,is_approved=True)
         services = Service.objects.filter(user=user,is_approved=True)
-        user_address = models.UserAddress.objects.get(user=request.user)
+        user_address = models.UserAddress.objects.get(user=user)
+        specialitys  = Speciality.objects.filter(user=user,is_approved=True)
         args = {
+            'specialitys':specialitys,
             'user_address':user_address,
             'degrees':degrees,
             'services':services,

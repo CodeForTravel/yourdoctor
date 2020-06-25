@@ -12,6 +12,7 @@
         <a class="active item" data-tab="first">Doctor Verification</a>
         <a class="item" data-tab="second">Degrees Approval</a>
         <a class="item" data-tab="third">Service Approval</a>
+        <a class="item" data-tab="fourth">Speciality Approval</a>
     </div>
     <div class="ui bottom attached active tab segment" data-tab="first">
         <div class="ui stackable grid">
@@ -48,6 +49,7 @@
                     </a>
                     <h3>Doctor Name : {{ degree.user.userinfo.first_name }} {{ degree.user.userinfo.last_name }}</h3>
                     <h3>Name Of Degree : {{ degree.name }}</h3>
+                    <h3>Subject Of Degree : {{ degree.subject }}</h3>
                     <h5>Institution : {{ degree.institution_name }}</h5>
                     <h5>Starting Year : {{ degree.starting_time }}</h5>
                     <h5>Ending Year  : {{ degree.ending_time }}</h5>
@@ -99,6 +101,34 @@
         <p>You have No applications to approve!</p>
         {% endif %}
     </div>
+    </div>
+
+    <!-- Speciality Approve -->
+    <div class="ui bottom attached tab segment" data-tab="fourth">
+        {% if specialitys %}
+        {% for speciality in specialitys %}
+        <div class="row">
+            <div class="ui sixteen wide column">
+                <div class="ui clearing segment">
+                    <a href="{% url 'doctors:doctor_detail' speciality.user.id %}">
+                        <h3>User ID : {{ speciality.user.user_unique_id }}</h3>
+                    </a>
+                    <h3>Doctor Name : {{ speciality.user.userinfo.first_name }} {{ speciality.user.userinfo.last_name }}</h3>
+                    <h3>Name Of Speciality : {{ speciality.speciality }}</h3>
+                    <h5>Starting Year : {{ speciality.start_time }}</h5>
+                    <h5>Ending Year : {{ speciality.end_time }}</h5>
+                    <h3>Description Of Speciality : </h3>
+                    <p>{{ speciality.speciality_details }}</p>
+                    <a href="{% url 'staffs:speciality_approval' speciality.id %}">
+                        <div class="ui right floated button">Approve</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>You have No applications to approve!</p>
+        {% endif %}
     </div>
 
 </div>

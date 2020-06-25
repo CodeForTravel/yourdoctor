@@ -75,9 +75,9 @@
     <div class="ui middle aligned stackable grid">
         <div class="column">
             <div class="ui segment">
-                <div class="ui four link cards">
+                <div class="ui four relaxed stackable  centered fluid link cards">
                     {% for doctor in user_list %}
-                    {% include 'doctors/snippets/card.html' with instance=doctor%}
+                    {% include 'doctors/snippets/card.html' with instance=doctor specialitys=specialitys degrees=degrees  %}
                     {% endfor %}
                 </div>
             </div>

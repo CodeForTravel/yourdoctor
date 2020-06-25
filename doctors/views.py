@@ -42,7 +42,9 @@ class DoctorDetailView(View):
         doctor = CustomUser.objects.get(pk=pk)
         degrees = Degree.objects.all().filter(user=doctor,is_approved=True)
         address = UserAddress.objects.get(user=doctor)
+        specialitys = Speciality.objects.filter(user=doctor,is_approved=True)
         args = {
+            'specialitys':specialitys,
             'address':address,
             'doctor':doctor,
             'degrees':degrees
@@ -78,12 +80,39 @@ class DoctorListView(View):
             user_list = user_list.filter(service__area__name__iexact=area).distinct()
         if is_valid_param(address):
             user_list = user_list.filter(service__address__name__iexact=address).distinct()
-            print(user_list)
+
+
+        degrees = Degree.objects.filter(is_approved = True)
+        specialitys = Speciality.objects.filter(is_approved = True)
  
+
+
         args = {
+            'specialitys':specialitys,
+            'degrees':degrees,
             'countrys':countrys,
             'user_list':user_list,
             'form':form,
         }
         return render(request,self.template_name,args)
 
+
+class SpecialityForm(LoginRequiredMixin,View):
+    login_url = 'users:login'
+    
+    template_name = 'doctors/speciality_form.html'
+    def get(self,request):
+        form = forms.SpecialityForm()
+        args = {
+            'form':form,
+        }
+        return render(request,self.template_name,args)
+    def post(self, request):
+        form = forms.SpecialityForm(request.POST or None)
+        if form.is_valid():
+            form.deploy(request)
+            return redirect('users:user_profile')
+        variables = {
+            'form': form,
+            }
+        return render(request, self.template_name, variables)

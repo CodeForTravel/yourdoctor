@@ -9,6 +9,8 @@ app_name ='doctors'
 urlpatterns = [
     path('doctor_info',views.DoctorInformationView.as_view(),name='doctor_info'),
     path('doctor_list',views.DoctorListView.as_view(), name='doctor_list'),
-    path('doctor/detail/<int:pk>/', DoctorDetailView.as_view(), name='doctor_detail'),
+    path('doctor/detail/<int:pk>/', views.DoctorDetailView.as_view(), name='doctor_detail'),
+    path('add/speciality/', views.SpecialityForm.as_view(), name='speciality_form'),
+
     
 ]

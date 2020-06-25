@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block head %}
+<style>
+  .speciality_form{
+      margin: 10px !important;
+      padding: 10px !important;
+  }
+  h1{text-align: center !important;}
+</style>
+{% endblock %}
+{% block content %}
+<div class="ui vertical segment">
+    <div class="row speciality_form">
+        <div class="ui dividing header"><h1>Add Your Speciality </h1></div>
+        <form method="POST" class="ui form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="ui positive button" type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

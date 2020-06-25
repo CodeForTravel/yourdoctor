@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% block title %} New Prescription {% endblock %}
 {% block head %}
 <style>
     img{
@@ -18,13 +19,20 @@
         margin: 0px 100px 0px 100px;
         padding: 10px;
     }
+    .ui.dividing.header{
+        padding: 10px 20px 10px 20px !important;
+        font-size: 20px !important;
+    }
+    .test{
+        width: 200px !important;
+        padding: 13px !important;
+    }
     
 </style>
 {% endblock %}
 {% block content %}
 <div class="ui vertical segment">
 <div><h1>New Preascription</h1></div>
-
 <div class="ui clearing segment">
     <div class="ui stackable grid">
         <div class="five wide column">
@@ -51,43 +59,84 @@
             <p>Appointment ID : {{ cart.appointment_id }}</p>
         </div>
     </div>
-    
 <hr>
 
-<div class="ui vertical clearing segment">
-    <button type="button" class="ui left floated button test add_medicine">
+
+<div class="ui basic clearing segment">
+    <button type="button" class="circular ui left floated green button test add_medicine">
         Add medicine
     </button>
 
-        <a href="{% url 'appointments:previous_treatment' cart.appointment_id %}">
-            <div class="ui right floated button">Previous Preascription</div>
-        </a>
+    <button type="button" class="circular ui left floated green button test add_test">
+        Add Test
+    </button>
 
-        <a href="{% url 'appointments:complete_appointment' cart.id %}">
-        <div class="ui right floated button"> Mark as Complete</div>
-        </a>
+    <a href="{% url 'appointments:complete_appointment' cart.id %}">
+        <div class="circular ui right floated red button test"> Mark as Complete</div>
+    </a>
+    <a href="{% url 'appointments:previous_treatment' cart.appointment_id %}">
+        <div class="circular ui right floated green button test">Previous Preascription</div>
+    </a>
+
+       
   
 </div>
 
 <!-- This is for showing added medicine -->
     <div class="show_medicine">
         <div class="ui segments ">
+            
+            <!-- Showing Medicine -->
+        {% if medicines %}
+        <div class="ui dividing header">Medicine</div>
         {% for medicine in medicines %}
-            <div class="ui vartical clearing segment">
+            <div class="ui basic clearing segment">
                 <h3>{{ medicine.name }}</h3>
                 
-                <a href=""><div class="ui right floated red button delete_medicine">Delete</div></a>
 
+                <!-- <h1>{{ test.id }}</h1>
+                <h1>{{ cart.id }}</h1> -->
+
+
+                <a href="{% url 'medicines:delete_medicine' medicine.id cart.appointment_id %}">
+                    <div class="ui right floated red labeled icon button delete_medicine">
+                        <i class="trash alternate icon"></i>
+                        Delete</div></a>
                 <p class="meta">Quantity: {{ medicine.quantity }} &emsp;
                     Taking Time: {{ medicine.taking_time }}
                 </p>
-                
             </div>
         {% endfor %}
+        {% endif %}
+        
+
+        <!-- showing Test -->
+        {% if tests %}
+        <div class="ui dividing header">Test</div>
+        {% for test in tests %}
+        <div class="ui basic clearing segment">
+            <h3>{{ test.name }}</h3>
+            <a href="{% url 'medicines:delete_test' test.id cart.appointment_id %}">
+                <div class="ui right floated red labeled icon button delete_test">
+                    <i class="trash alternate icon"></i>
+                    Delete</div>
+                
+            </a>
+            <h5>Condition : {{ test.condition }}</h5>
+            <h5>Test Description : </h5>
+            <p>{{ test.description }}</p>
+
+        </div>
+        {% endfor %}
+        {% endif %}
+
+
         </div>
     </div>
-<!-- this is for add medicine -->
-    <div class="ui modal">
+
+
+<!-- this is for add medicine form -->
+    <div class="ui modal medicine">
         <i class="close icon"></i>
         <div class="header">
             Add medicine here
@@ -117,6 +166,45 @@
     </div>
 
 
+
+
+
+    <!-- this is for add test form -->
+    <div class="ui modal test">
+        <i class="close icon"></i>
+        <div class="header">
+            Add Test here
+        </div>
+        <form method="POST" class="ui form">
+            {% csrf_token %}
+            <div class="content">
+                <div class="description">
+                    <div class="fields">
+                        <div class="eight wide field">
+                            <label>{{ test_form.name.label }}</label>
+                            {{ test_form.name }}
+                        </div>
+                        <div class="eight wide field">
+                            <label>{{ test_form.condition.label }}</label>
+                            {{ test_form.condition }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>{{ test_form.description.label }}</label>
+                        {{ test_form.description }}
+                    </div>
+
+                    <button class="ui button add_test_button" type="submit">Add</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+
+
+
+
 </div>
 </div>
 {% endblock %}
@@ -125,10 +213,16 @@
 {% block scripts %} 
 <script>
     $(".add_medicine").click(function(){
-        $('.ui.modal')
+        $('.ui.modal.medicine')
             .modal('show')
             ;
     })
+
+    $(".add_test").click(function () {
+            $('.ui.modal.test')
+                .modal('show')
+                ;
+        })
 
 </script>
 {% endblock %}
