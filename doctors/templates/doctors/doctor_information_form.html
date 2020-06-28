@@ -1,11 +1,42 @@
 {% extends 'base.html' %}
-
+{% block head %}
+<style>
+    .wrapper_sec{
+        padding: 20px !important;
+        margin-top: 30px !important;
+        color: whitesmoke !important;
+    }
+    .form_sec{
+        max-width: 500px !important;
+        background-color: teal !important;
+        margin: auto !important;
+        padding: 20px !important;
+    }
+    .ui.form{
+        padding: 15px !important;
+    }
+    .ui.header{
+        color: whitesmoke !important;
+        text-align: center !important;
+        font-size: 25px !important;
+        padding: 5px !important;
+    }
+</style>
+{% endblock %}
 {% block content %}
-    <h1>Built Your Profile </h1>
-    <form method="post" class="ui form">
-        {% csrf_token %}
-        {{ form.as_p }}
+
+<div class="wrapper_sec">
+    <div class="column form_sec">
+        <form method="post" class="ui form">
+            <div class="ui header">
+                Give Your Doctorial Infomation
+            </div>
+            {% csrf_token %}
+            {{ form.as_p }}
     
-        <button type='submit'>Submit</button>
-    </form>
+            <button class="circular fluid ui green button" type='submit'>Submit</button>
+        </form>
+    </div>
+</div>
+    
 {% endblock %}

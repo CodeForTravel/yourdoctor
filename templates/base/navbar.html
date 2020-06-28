@@ -21,6 +21,9 @@
         color: whitesmoke;
         font-size: 15px;
     }
+    .nav_button:hover{
+        background-color: rgb(30, 30, 25) !important;
+    }
 </style>
 
 <div class="ui stackable secondary menu">
@@ -65,8 +68,8 @@
                 Login
             </a>
             <a href="{{ registration_url }}" class="item {% if request.path == registration_url %}active {% endif %}">
-               Sign-Up
-             </a>
+                Sign-Up
+            </a>
             {% endif %}
         </div>
     </div>

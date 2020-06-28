@@ -1,15 +1,23 @@
 {% extends 'base.html' %}
 
+{% block head %}
+<style>
+    #rating_form{
+        font-size: 30px !important;
+        padding: 5px !important;
+    }
+</style>
+{% endblock %}
 {% block content %}
 <div class="ui vertical segment">
     <div class="ui stackable grid">
         <div class="ui column">
             <div class="ui clearing segment">
-                <form method="POST">
+                <form method="POST" class="ui form review_form">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <div class="ui star rating" data-rating="3" name="data_rating"></div>
-                    <button type="submit">Submit</button>
+                    <div class="ui star rating" data-rating="3" id="rating_form"></div>
+                    <button type="submit" class="ui fluid green button">Submit</button>
                 </form>
             </div>
         </div>
@@ -21,11 +29,31 @@
 
 {% block scripts %}
 <script>
-    $('.ui.rating')
-            .rating({
-                initialRating: 3,
-                maxRating: 5
+    $(document).ready(function(){
+        $('.ui.rating').rating({
+            initialRating: 3,
+            maxRating: 5
+        });
+        $('.review_form').submit(function(e){
+
+            e.preventDefault();
+            console.log('button selected')
+            var rat_value = $('#rating_form > .icon.active').length
+            comment = $('#id_comment').val()
+            console.log(rat_value)
+            $.ajax({
+                type:'POST',
+                url : "{% url 'reviews:submit_rating' %}",
+                data : { 
+                    comment : comment,
+                    rat_value: rat_value ,
+                    csrfmiddlewaretoken : $('input[name=csrfmiddlewaretoken]').val()
+                    },
+                success : function(){
+
+                }
             })
-            ;
+        })
+    })
 </script>
 {% endblock %}

@@ -1,31 +1,17 @@
 from django import forms
 
-from . import models 
-from users.models import CustomUser
+from . import models
 
 
 
 
 class ReviewForm(forms.Form):
     
-    comment = forms.CharField(label='Comment',
+    comment = forms.CharField(label='Write a Review',
         max_length=300,required=False,
-        widget=forms.TextInput(attrs={'placeholder':'Write your openion!'}))
-    rating = forms.IntegerField(label='Rating',required=False,max_value=5,min_value=1)
+        widget=forms.Textarea(attrs={'placeholder':'Write your opinion!'}))
 
-    def clean(self):
-        comment = self.cleaned_data.get('comment')
-        rating = self.cleaned_data.get('rating')
-        
-        if rating:
-            if (rating>5 or rating < 1) :
-                raise forms.ValidationError("Your rating must be within 1 to 5")
-
-        if not comment and not rating:
-            raise forms.ValidationError('Please write your valuable openion!')
-
-    def deploy(self):
-        comment = self.cleaned_data.get('comment')
-        rating = self.cleaned_data.get('rating')
-        print(comment)
-        print(rating)
+    # def deploy(self,rat_value):
+    #     comment = self.cleaned_data.get('comment')
+    #     print(comment)
+    #     print(rat_value)

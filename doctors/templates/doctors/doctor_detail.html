@@ -1,12 +1,23 @@
 {% extends 'base.html' %}
 {% block head %}
     <style>
-      
+      .wrapper{
+          margin: 20px !important;
+      }
+      #rating_form{
+        font-size: 30px !important;
+        padding: 5px !important;
+    }
+    .review_info{
+        margin: 10px 0px 10px 0px !important;
+        padding: 10px 0px 10px 0px !important;
+    }
+
     </style>
 {% endblock %}
     
 {% block content %}
-<div class="ui vertical segment">
+<div class="wrapper">
 <div class="ui stackable grid">
     <div class="five wide column">
         <div class="ui center aligned  segment">
@@ -43,10 +54,9 @@
     </div>
 </div>
 <div class="ui stackable grid">
+    <div class="row">
     <div class="column">
-
-       
-            <div class="ui top attached tabular menu">
+            <div class="ui top attached tabular stackable menu">
                 <a class="active item" data-tab="first">Personal Information</a>
                 <a class="item" data-tab="second">Medical Information</a>
                 <a class="item" data-tab="third">Graduation Information</a>
@@ -97,7 +107,39 @@
                 {% endif %}
             </div>
             <div class="ui bottom attached tab segment" data-tab="fifth"></div>
+    </div></div>
+
+
+    <!-- Review Section -->
+    <div class="row">
+        <div class="column">
+            {% if cartitems %}
+            <div class="review_info">
+                <div class="ui dividing header">
+                    Review about your most recent unreviewed appointment!
+                </div>
+                <span>Most Recent Unreviewed Appointment Day : </span><span>{{ last_appointment.service.day }}</span>
+                <br>
+                <span>Recent Unreviewed Appointment Date : </span>
+                <span>{{ last_appointment.appointment_schedule.appointment_date }}</span>
+                
+            </div>
+            <form method="POST" class="ui form review_form">
+                {% csrf_token %}
+                <div class="ui star rating" data-rating="3" id="rating_form"></div>
+                
+                <div class="field">
+                    <label>{{ form.comment.label_tag }}</label>
+                    {{ form.comment }}
+                </div>
+                
+                <button type="submit" class="ui fluid green button">Submit</button>
+            </form>
+            {% endif %}
+        </div>
     </div>
+
+
 </div>
 
 
@@ -106,8 +148,35 @@
 
 {% block scripts %}
 <script>
-    $('.menu .item')
-            .tab()
-            ;
+   
+    $(document).ready(function () {
+        $('.menu .item').tab();
+
+        $('.ui.rating').rating({
+            initialRating: 3,
+            maxRating: 5
+        });
+
+        $('.review_form').submit(function (e) {
+
+            e.preventDefault();
+            console.log('button selected')
+            var rat_value = $('#rating_form > .icon.active').length
+            comment = $('#id_comment').val()
+            console.log(rat_value)
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'reviews:submit_rating' %}",
+                data: {
+                    comment: comment,
+                    rat_value: rat_value,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                },
+                success: function () {
+                    window.location = window.location
+                }
+            })
+        })
+    })
 </script>
 {% endblock %}

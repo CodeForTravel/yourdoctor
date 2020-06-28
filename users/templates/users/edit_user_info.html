@@ -1,8 +1,41 @@
-
 {% extends "base.html" %}
+{% block head %}
+<style>
+    .wrapper{
+        margin-top: 20px !important;
+        color: whitesmoke !important;
+    }
+    .form_sec{
+        max-width: 520px !important;
+        margin: auto !important;
+        background-color: teal !important;
+        padding: 30px !important;
+    }
+    .ui.header{
+        font-size: 30px !important;
+        text-align: center !important;
+        padding: 5px !important;
+        color: whitesmoke !important;
+    }
+    .ui.form{
+        padding: 10px !important;
+    }
+</style>
+{% endblock %}
+
 
 {% block content %}
+<div class="wrapper">
+    <div class="column form_sec">
+       <form method="POST" class="ui form" enctype="multipart/form-data">
+           <div class="ui header">User Information</div>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="circular fluid ui green button">Submit</button>
+       </form>
+    </div>
+</div>
 
-{% include 'base/base_form.html' with form=form %}
+<!-- {% include 'base/base_form.html' with form=form %} -->
 
 {% endblock %}

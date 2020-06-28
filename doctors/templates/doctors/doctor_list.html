@@ -76,9 +76,13 @@
         <div class="column">
             <div class="ui segment">
                 <div class="ui four relaxed stackable  centered fluid link cards">
-                    {% for doctor in user_list %}
-                    {% include 'doctors/snippets/card.html' with instance=doctor specialitys=specialitys degrees=degrees  %}
-                    {% endfor %}
+                    {% if user_list %}
+                        {% for doctor in user_list %}
+                        {% include 'doctors/snippets/card.html' with instance=doctor specialitys=specialitys degrees=degrees  %}
+                        {% endfor %}
+                    {% else %}
+                        <p>There is no service on this location right now!</p>
+                    {% endif %}
                 </div>
             </div>
         </div>

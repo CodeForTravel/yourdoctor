@@ -2,20 +2,31 @@
 {% block head %}
 <style>
   .speciality_form{
-      margin: 10px !important;
+      max-width: 650px !important;
+      margin: auto !important;
       padding: 10px !important;
+      background-color: teal !important;
+      color: whitesmoke !important;
   }
-  h1{text-align: center !important;}
+  .ui.header{
+      text-align: center !important;
+      font-size: 25px !important;
+      padding: 5px !important;
+      color: whitesmoke !important;
+      }
+  .ui.form{
+      padding: 20px !important;
+  }
 </style>
 {% endblock %}
 {% block content %}
-<div class="ui vertical segment">
-    <div class="row speciality_form">
-        <div class="ui dividing header"><h1>Add Your Speciality </h1></div>
+<div class="wrapper">
+    <div class="column speciality_form">
         <form method="POST" class="ui form">
+            <div class="ui header">Add Your Speciality</div>
             {% csrf_token %}
             {{ form.as_p }}
-            <button class="ui positive button" type="submit">Submit</button>
+            <button class="circular ui positive fluid button" type="submit">Submit</button>
         </form>
     </div>
 </div>

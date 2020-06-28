@@ -12,7 +12,7 @@
             padding: 0 !important;
         }
         .ui.vertical.center.aligned.segment.home_head{
-            height: 600px !important;
+            min-height: 600px !important;
         background-image: linear-gradient(
             to right bottom,
             rgba(126,213,111,0.6),
@@ -78,7 +78,7 @@
           .gap{
               margin-top: 30px !important;
               width: 100% !important;
-              height: 300px !important;
+              min-height: 300px !important;
               background-image: linear-gradient(
             to right bottom,
             rgba(191, 243, 212, 0.605),
@@ -210,17 +210,18 @@
 
                 <!-- Medical specialit -->
                 <div class="row gap">
-                    <div class="left floated eight wide column des_col">
+                    <div class="eight wide column des_col">
                         <h4>Medical Specialis</h4>
                         <p>A medical specialty is a branch of medical practice that
                              is focused on a defined group of patients, diseases, skills, or
                         philosophy. Examples include children, cancer,
                          laboratory medicine, or primary care.</p>
-                        <button class="circular ui button">
+                        <a href="{% url 'doctors:doctor_list'%}">
+                         <button class="circular ui button">
                             Find a Specialist
-                        </button>
+                        </button></a>
                     </div>
-                    <div class="right floated eight wide column des_col">
+                    <div class="eight wide column des_col">
                         <h4>Our Specialist</h4>
                         <div class="list_class">
                             <div class="ui list">
@@ -243,12 +244,11 @@
                                     </div>
                                 </a>
                             </div>
-                            <button class="ui circular labeled icon button">
-                                <i class="arrow alternate circle right icon"></i>
-                                See More?
-                            </button>
-
                         </div>
+                        <button class="ui circular labeled icon button">
+                            <i class="arrow alternate circle right icon"></i>
+                            See More?
+                        </button>
                     </div>
                     
                 </div>

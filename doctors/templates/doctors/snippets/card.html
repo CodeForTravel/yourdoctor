@@ -2,7 +2,9 @@
 <div class="ui card" style="width: 220px;">
 
     <div class="image" >
+        {% if doctor.userinfo.image %}
         <img src="{{ doctor.userinfo.image.url }}" style="height: 240px;">
+        {% endif %}
     </div>
 
 

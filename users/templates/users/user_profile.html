@@ -1,11 +1,18 @@
-    {% extends 'base.html' %}
+{% extends 'base.html' %}
 
-    {% block content %}
-    <div class="ui vertical segment">
+{% block head %}
+<style>
+.wrapper_seg{
+    margin-bottom: 20px !important;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+    <div class="ui vertical segment wrapper_seg">
         <div class="ui stackable grid">
             <div class="four wide column">
                 <div class="ui center aligned segment">
-                    <h1>{{ user.userinfo.first_name }} {{ user.userinfo.last_name }}</h1>
                     {% if user.userinfo.image %}
                     <image src="{{ user.userinfo.image.url }}" style="width:220px; height: 250px;"></image>
                     {% endif %}
@@ -14,8 +21,13 @@
             </div>
     
             <div class="eight wide column">
-                <div class="ui segment">
-                    There will be some info....
+                <div class="ui clearing segment">
+                    <h1>{{ user.userinfo.first_name }} {{ user.userinfo.last_name }}</h1>
+                    {% if request.user.user_type == 'doctor' %}
+                    <a href="{% url 'doctors:doctor_info'%}">
+                        <button class="ui right floated button">Add Doctorial Info</button>
+                    </a>
+                    {% endif %}
                 </div>
             </div>
             <div class="four wide right floated column">
@@ -31,22 +43,22 @@
 <!-- Personal Informations -->
         <div class="ui stackable grid">
             <div class="row">
-            <div class="column">
-                <div class="ui clearing segment">
-                    <h2>Personal Info</h2>
-                    <h4>Religion : {{ user.userinfo.religion }}</h4>
-                    <h4>Gender : {{ user.userinfo.gender }}</h4>
-                    <h4>Email : {{ user.email }}</h4>
-                    <h4>User type : {{ user.user_type }}</h4>
-                    <h4>Date Of Birth : {{ user.dob }} </h4>
-                    
-                    <button class="ui right floated button">
-                        <a href="{% url 'users:edit_user_info' %}">Edit your profile</a>
-                    </button>
-                    
-                    
+                <div class="column">
+                    <div class="ui clearing segment">
+                        <h2>Personal Info</h2>
+                        <h4>Religion : {{ user.userinfo.religion }}</h4>
+                        <h4>Gender : {{ user.userinfo.gender }}</h4>
+                        <h4>Email : {{ user.email }}</h4>
+                        <h4>User type : {{ user.user_type }}</h4>
+                        <h4>Date Of Birth : {{ user.dob }} </h4>
+                        <a href="{% url 'users:edit_user_info' %}">
+                            <button class="ui right floated green basic button">
+                                Edit your profile
+                            </button>
+                        </a> 
+                    </div>
                 </div>
-            </div></div>
+            </div>
             <div class="row">
                 <div class="column">
                     <div class="ui clearing segment">
@@ -55,12 +67,9 @@
                         <h4>State/Divivsion : {{ user_address.division.name }}</h4>
                         <h4>City/Town : {{ user_address.city.name }}</h4>
                         {{ user_address.area.name }} , {{ user_address.address.name }}
-                        
-                        <button class="ui right floated button">
-                            <a href="{% url 'users:user_address_form' %}">Edit address</a>
-                        </button>
-                        
-                        
+                        <a href="{% url 'users:user_address_form' %}">
+                            <button class="ui right floated green basic button">Edit address </button>
+                        </a> 
                     </div>
                 </div>
             </div>
@@ -72,7 +81,7 @@
             <div class="column">
                 <div class="ui clearing segment">
                     <div style="text-align: center;">
-                        <h1>Your Dgrees </h1>
+                        <h1>Your Degrees </h1>
                     </div>
                     {% for degree in degrees %}
                     <div class="ui clearing segment">
@@ -86,9 +95,11 @@
                         {{ degree.ending_time }}
                     </div>
                     {% endfor %}
-                    <div class="ui right floated button">
-                        <a href="{% url 'degrees:degree_form' %}">Add Degree</a>
-                    </div>
+                    
+                    <a href="{% url 'degrees:degree_form' %}">
+                        <div class="ui right floated green basic button"> Add Degree</div>
+                    </a>
+                    
                 </div>
             </div>
         </div>
@@ -112,55 +123,56 @@
                     </div>
                     {% endfor %}
                     {% endif %}
-                    <div class="ui right floated button">
-                        <a href="{% url 'doctors:speciality_form' %}">Add Your Speciality</a>
-                    </div>
+                    <a href="{% url 'doctors:speciality_form' %}">
+                    <div class="ui right floated green basic button">
+                        Add Speciality
+                    </div></a>
                 </div>
             </div>
         </div>
+
+
+
         <!-- for service info -->
-        
-
-                <div class="ui clearing segment">
-                    <div style="text-align: center;">
-                        <h1>Your Services </h1>
-                    </div>
-                    {% if services %}
-                    {% for service in services %}
-                    <div class="ui segment">
-                    <div class="ui stackable grid">
-                        <div class="row">
-                            <div class="seven wide column">
-                                <b>
-                                    <h1>{{ service.day }}</h1>
-                                </b>
-                            
-                                <p>{{ service.clinic_name }}</p>
-                                <p>{{ service.address.name }},{{ service.area.name }},
-                                    {{ service.city.name }},{{ service.division.name }},{{ service.country.name }}</p>
-                                {{ service.start_time }} <span> &emsp; To &emsp;</span>
-                                {{ service.end_time }}
-                            </div>
-                            <div class="six wide column">
-                                <h3>Appointment Fee</h3>
-                                <p>New Appointment : BDT {{ service.servicefee.new_appointment_fee}}</p>
-                                <p>Re-Appointment : BDT {{ service.servicefee.old_appointment_fee}}</p>
-                                <p>Report Show Appointment : BDT {{ service.servicefee.report_appointment_fee}}</p>
-                            </div>
-                            <div class="three wide column">
-                                <a href="{% url 'services:service_edit' service.id %}"><button class="ui button">Edit Service</button></a>
-                            </div>
-                        </div> 
-                    </div>  
-                </div>
-                {% endfor %}
-            {% endif %}
-                <div class="ui right floated button">
-                    <a href="{% url 'services:doctor_service_form' %}">Add New Service</a>
-                </div>
+        <div class="ui clearing segment">
+            <div style="text-align: center;">
+                <h1>Your Services </h1>
             </div>
-
-
+            {% if services %}
+            {% for service in services %}
+            <div class="ui segment">
+                <div class="ui stackable grid">
+                    <div class="row">
+                        <div class="seven wide column">
+                            <b>
+                                <h1>{{ service.day }}</h1>
+                            </b>
+                        
+                            <p>{{ service.clinic_name }}</p>
+                            <p>{{ service.address.name }},{{ service.area.name }},
+                                {{ service.city.name }},{{ service.division.name }},{{ service.country.name }}</p>
+                            {{ service.start_time }} <span> &emsp; To &emsp;</span>
+                            {{ service.end_time }}
+                        </div>
+                        <div class="six wide column">
+                            <h3>Appointment Fee</h3>
+                            <p>New Appointment : BDT {{ service.servicefee.new_appointment_fee}}</p>
+                            <p>Re-Appointment : BDT {{ service.servicefee.old_appointment_fee}}</p>
+                            <p>Report Show Appointment : BDT {{ service.servicefee.report_appointment_fee}}</p>
+                        </div>
+                        <div class="three wide column">
+                            <a href="{% url 'services:service_edit' service.id %}"><button class="ui button">Edit Service</button></a>
+                        </div>
+                    </div> 
+                </div>  
+            </div>
+            {% endfor %}
+            {% endif %}
+            <a href="{% url 'services:doctor_service_form' %}">
+                <div class="ui right floated basic green button">
+                    Add New Service
+                </div></a>
+            </div>
     </div>
 
     {% endif %}

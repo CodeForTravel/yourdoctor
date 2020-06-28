@@ -102,7 +102,7 @@ class EditUserInfoForm(forms.Form):
         ('Male', 'Male'),
         ('Female','Female'),
     )
-    mobile = forms.IntegerField(label='Modile',required=False,
+    mobile = forms.IntegerField(label='Mobile',required=False,
     widget=forms.TextInput(attrs={'placeholder':'01*********'}))
 
     first_name = forms.CharField(label='First name',
@@ -118,12 +118,11 @@ class EditUserInfoForm(forms.Form):
     religion = forms.CharField(label='Religion',
         max_length=50,required=False,
         widget=forms.TextInput(attrs={'placeholder':'Religion'}))
-    
-    
-    
-
+    dob   = forms.DateField(label="Date Of Birth",
+            required=False,
+            )
     image = forms.ImageField(label='Image', required=False,)
-
+    
     
 
     def clean(self):
@@ -155,6 +154,7 @@ class EditUserInfoForm(forms.Form):
         gender       = self.cleaned_data.get('gender')
         image        = self.cleaned_data.get('image')
         mobile       = self.cleaned_data.get('mobile')
+        dob          = self.cleaned_data.get('dob')
 
         info.first_name = first_name
         info.last_name  = last_name
@@ -162,7 +162,9 @@ class EditUserInfoForm(forms.Form):
         info.gender     = gender
         info.image      = image
         info.mobile     = mobile
+        info.dob        = dob
         info.complete   = True
+
 
         info.save()
 

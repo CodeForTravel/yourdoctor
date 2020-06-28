@@ -3,34 +3,55 @@
 {% block head %}
 <!-- <link rel="stylesheet" href="{% static 'users/reg.css' %}"> -->
 <style>
-.form_sec{
-    width: 400px !important;
-    height: auto !important;
-    margin: auto !important;
-    background-color: teal !important;
-    color: whitesmoke !important;
-    padding: 40px !important;
-}
-.wrapper_sec{
-    margin-top:80px !important;
-}
-.extra{
-    margin-top: 20px !important;
-}
-.extra a{
-    color:white !important;
-    margin-left: 5px !important;
-}
+    .form_sec {
+        max-width: 400px !important;
+        background-color: teal !important;
+        color: whitesmoke !important;
+        margin: auto !important;
+        max-height: 600px !important;
+        padding: 15px !important;
+    }
+
+    .ui.form {
+        padding: 15px !important;
+
+    }
+
+    .ui.header {
+        padding: 10px !important;
+        font-size: 20px !important;
+        color: wheat !important;
+    }
+
+    .wrapper_sec {
+        margin-top: 80px !important;
+        /* background-color: cadetblue !important; */
+    }
+
+    .extra {
+        margin-top: 10px !important;
+    }
+
+    .extra a {
+        color: white !important;
+        margin-left: 5px !important;
+    }
 </style>
 {% endblock %}
 {% block content %}
 
-<div class="ui vertical segment wrapper_sec">
-    
-    <div class="ui stackable grig">
+
+
+
+
+<div class="wrapper_sec">
+    <div class="column">
+        <!-- <h1 style="text-align: center;">Login</h1> -->
         <div class="ui center aligned segment form_sec">
-            <h1 style="text-align: center;">Sign Up</h1>
             <form method="POST" class='ui form' enctype="multipart/form-data">
+                <div class="ui header">
+                    Sign Up
+                </div>
                 {% csrf_token %}
                 <div class="field">
                     <div class="ui left icon input">
@@ -46,18 +67,68 @@
                 <div class="field">
                     <div class="ui left icon input">
                         {{ form.password1 }}
-                        <i class="star icon"></i>
+                        <i class="lock icon"></i>
                     </div>
                 </div>
                 <div class="field">
                     <div class="ui left icon input">
                         {{ form.password2 }}
-                        <i class="star icon"></i>
+                        <i class="lock icon"></i>
                     </div>
                 </div>
-                <!-- {{ form.as_p }} -->
+
                 <button class="positive fluid ui button" type="submit">
-                    Submit
+                    Sign-in
+                </button>
+            </form>
+            <div class="extra">
+                Already Have a account?
+                <u><a href="{% url 'users:login'%}"> Login</a></u>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<!-- <div class="ui vertical segment wrapper_sec">
+    
+    <div class="ui stackable grig">
+        <div class="ui center aligned segment form_sec">
+            <h1 style="text-align: center;">Sign Up</h1>
+            <form method="POST" class='ui form' enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="field">
+                    <div class="ui left icon input">
+                        {{ form.user_type }}
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        {{ form.email }}
+                        <i class="user icon"></i>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        {{ form.password1 }}
+                        <i class="lock icon"></i>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        {{ form.password2 }}
+                        <i class="lock icon"></i>
+                    </div>
+                </div>
+                
+                <button class="positive fluid ui button" type="submit">
+                    Sign-in
                 </button>
             </form>
             <div class="extra">
@@ -66,5 +137,5 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 {% endblock %}

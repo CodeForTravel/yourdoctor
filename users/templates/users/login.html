@@ -3,61 +3,83 @@
 {% block head %}
 <style>
     .form_sec {
-        width: 400px !important;
-        height: auto !important;
-        margin: auto !important;
+        max-width: 400px !important;
         background-color: teal !important;
         color: whitesmoke !important;
-        padding: 40px !important;
+        margin: auto !important;
+        max-height: 600px !important;
+        padding: 15px !important;
     }
-
+    .ui.form{
+        padding: 15px !important;
+        
+    }
+    .ui.header{
+        padding: 10px !important;
+        font-size: 20px !important;
+        color:wheat !important;
+    }
     .wrapper_sec {
         margin-top: 80px !important;
+        /* background-color: cadetblue !important; */
     }
-
     .extra {
-        margin-top: 20px !important;
+        margin-top: 10px !important;
     }
-
+        
     .extra a {
         color: white !important;
         margin-left: 5px !important;
     }
+    /* .positive.ui.button{
+        width: 150px !important;
+    } */
 </style>
 {% endblock %}
 {% block content %}
 
-<div class="ui vertical segment wrapper_sec">
-
-    <div class="ui stackable grig">
+<div class="wrapper_sec">
+    <div class="column">
+        <!-- <h1 style="text-align: center;">Login</h1> -->
         <div class="ui center aligned segment form_sec">
-            <h1 style="text-align: center;">Login</h1>
-            <form method="POST" class='ui form' enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="field">
-                    <div class="ui left icon input">
-                        {{ form.username }}
-                        <i class="user icon"></i>
-                    </div>
-                </div>
-                <div class="field">
-                    <div class="ui left icon input">
-                        {{ form.password }}
-                        <i class="star icon"></i>
-                    </div>
-                </div>
-                <button class="positive fluid ui button" type="submit">
-                    Submit
-                </button>
-            </form>
-            <div class="extra">
-                <p>New Here?
-                <u><a href="{% url 'users:registration'%}">Sign up</a></u></p>
-                <p>Forget password? 
-                    <u><a href="{% url 'users:password_reset' %}">Reset</a></u>
-                </p>
+        <form method="POST" class='ui form' enctype="multipart/form-data">
+            <div class="ui header">
+                Login Here
             </div>
+            {% csrf_token %}
+            <div class="field">
+                <div class="ui left icon input">
+                    {{ form.username }}
+                    <i class="user icon"></i>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui left icon input">
+                    {{ form.password }}
+                    <i class="lock icon"></i>
+                </div>
+            </div>
+            <button class="circular positive fluid ui button" type="submit">
+                Login
+            </button>
+        </form>
+        <div class="extra">
+            <p>New Here?
+                <u><a href="{% url 'users:registration'%}">Sign up</a></u></p>
+            <p>Forget password?
+                <u><a href="{% url 'users:password_reset' %}">Reset</a></u>
+            </p>
+        </div>
+
         </div>
     </div>
 </div>
+
+{% endblock %}
+
+{% block scripts %}id_password
+<script>
+    document.getElementById("id_username").setAttribute("placeholder", "Email");
+    document.getElementById("id_password").setAttribute("placeholder", "******");
+</script>
 {% endblock %}
