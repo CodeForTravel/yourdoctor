@@ -2,9 +2,14 @@
 
 {% block head %}
 <style>
-.wrapper_seg{
-    margin-bottom: 20px !important;
-}
+    .wrapper_seg{
+        margin-bottom: 20px !important;
+        
+    }
+    .ui.input{
+        /* width: 150px !important; */
+        padding-right: 40px !important;
+    }
 </style>
 {% endblock %}
 
@@ -13,9 +18,22 @@
         <div class="ui stackable grid">
             <div class="four wide column">
                 <div class="ui center aligned segment">
+
                     {% if user.userinfo.image %}
                     <image src="{{ user.userinfo.image.url }}" style="width:220px; height: 250px;"></image>
                     {% endif %}
+                    
+                    <!-- User Image form -->
+                    <form class="ui equal width form" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <div class="ui input" type="submit">
+                            {{ img_form.image }}
+                            <button class="ui icon button">
+                                <i class="save icon"></i>
+                            </button>
+                        </div>
+                    </form>
 
                 </div>
             </div>
@@ -24,6 +42,14 @@
                 <div class="ui clearing segment">
                     <h1>{{ user.userinfo.first_name }} {{ user.userinfo.last_name }}</h1>
                     {% if request.user.user_type == 'doctor' %}
+
+                    <p>BMDC Number : {{ user.doctorinfo.bmdc_number }}</p>
+                    <p>Designation : {{ user.doctorinfo.current_position }} </p>
+                    <p>Department : {{ user.doctorinfo.current_working_department }} </p>
+                    <p>Institution : {{ user.doctorinfo.current_working_institution }} </p>
+
+
+
                     <a href="{% url 'doctors:doctor_info'%}">
                         <button class="ui right floated button">Add Doctorial Info</button>
                     </a>

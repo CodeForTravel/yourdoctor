@@ -55,17 +55,31 @@ class UserProfileView(LoginRequiredMixin,View):
     login_url = 'users:login'
     template_name = 'users/user_profile.html'
     def get(self,request):
+        img_form = forms.ImageForm()
         user = request.user
         degrees = Degree.objects.filter(user=user,is_approved=True)
         services = Service.objects.filter(user=user,is_approved=True)
         user_address = models.UserAddress.objects.get(user=user)
         specialitys  = Speciality.objects.filter(user=user,is_approved=True)
         args = {
+            'img_form':img_form,
             'specialitys':specialitys,
             'user_address':user_address,
             'degrees':degrees,
             'services':services,
             'user':user
+        }
+        return render(request,self.template_name,args)
+
+    def post(self,request):
+        img_form = forms.ImageForm(request.POST or None ,request.FILES)
+        if img_form.is_valid():
+            user = UserInfo.objects.get(user=request.user)
+            print(user)
+            img_form.update_image(user)
+            return redirect("users:user_profile")
+        args = {
+            'img_form':img_form
         }
         return render(request,self.template_name,args)
 
@@ -178,6 +192,10 @@ class UserAddressFormView(View):
             'form':form,
                     }
         return render(request,self.template_name,args)
+
+
+
+
 
 
 class DivisionAPI(APIView):

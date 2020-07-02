@@ -1,7 +1,9 @@
 from django.shortcuts import render,redirect
 from django.views import View
+from django.db.models import Avg
 from . import forms
 from reviews.forms import ReviewForm
+from reviews.models import Review
 from users.models import CustomUser,UserAddress
 from doctors.models import DoctorInfo,Speciality,Experience
 
@@ -11,6 +13,7 @@ from services.models import Service
 from degrees.models import Degree
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from addresses.models import Country
+
 
 
 class DoctorInformationView(LoginRequiredMixin,View):
@@ -38,24 +41,34 @@ class DoctorInformationView(LoginRequiredMixin,View):
         return render(request, self.template_name, variables)
 
 
-
 class DoctorDetailView(View):
     template_name = 'doctors/doctor_detail.html'
     def get(self,request,pk):
         last_appointment = None
+        cartitems = None
+        avg_rating = 0
         form = ReviewForm()
-        doctor = CustomUser.objects.get(pk=pk)
-        degrees = Degree.objects.all().filter(user=doctor,is_approved=True)
-        address = UserAddress.objects.get(user=doctor)
+        doctor      = CustomUser.objects.get(pk=pk)
+        degrees     = Degree.objects.all().filter(user=doctor,is_approved=True)
+        address     = UserAddress.objects.get(user=doctor)
         specialitys = Speciality.objects.filter(user=doctor,is_approved=True)
-        cartitems = CartItem.objects.filter(
-                                            user = request.user,
-                                            is_reviewed =False,
-                                            appointment_complete=True,
-                                            )
+        reviews     = Review.objects.filter(doctor=doctor)
+
+        avg         = Review.objects.filter(doctor=doctor).aggregate(Avg('rating'))
+        if avg:
+            avg_rating  = avg['rating__avg']
+
+        if request.user.is_authenticated:
+            cartitems = CartItem.objects.filter(
+                                                user = request.user,
+                                                is_reviewed =False,
+                                                appointment_complete=True,
+                                                )
         if cartitems:
             last_appointment = cartitems.last()
         args = {
+            'avg_rating':avg_rating,
+            'reviews':reviews,
             'last_appointment':last_appointment,
             'cartitems':cartitems,
             'form':form,

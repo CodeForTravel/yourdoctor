@@ -1,15 +1,50 @@
 {% extends 'base.html' %}
+
+{% block head %}
+<style>
+    .wrapper_sec{
+        margin: 20px !important;
+    }
+    .doc_img{
+        width: 220px !important;
+        height: 250px !important;
+        margin: auto !important;
+    }
+    .six.wide.column.doctor{
+        margin-left: 50px !important;
+    }
+    .medinice{
+        margin: 15px !important;
+        padding: 10px !important;
+    }
+    .medicine_header{
+        font-weight: bold !important;
+        font-size: 20px !important;
+        padding: 2px !important;
+        margin: 5px !important;
+    }
+    .medicine_taking_time{
+        font-size: 15px !important;
+        margin: 5px 0px 3px 10px !important;
+    }
+    .ui.dividing.header{
+        font-size: 22px !important;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 
-<div class="ui vertical segment">
+
+<div class="wrapper_sec">
     {% if appointments %}
     {% for appointment in appointments %}
-    <div class="ui clearing segment">
+    <div class="ui segment">
         <div class="ui stackable grid">
-            <div class="five wide column">
-                <img src="{{ appointment.doctor.userinfo.image.url }}" alt="">
+            <div class="four wide column">
+                <img class="ui image doc_img" src="{{ appointment.doctor.userinfo.image.url }}" alt="">
             </div>
-            <div class="six wide column">
+            <div class="six wide column doctor">
                 <h1>Dr. {{ appointment.doctor.userinfo.first_name }} {{ appointment.doctor.userinfo.last_name }}</h1>
                 <p>
                     <small class="meta">
@@ -30,18 +65,38 @@
                 <p>Appointment ID : {{ appointment.appointment_id }}</p>
             </div>
         </div>
+        <hr>
 
-
-        <!-- This is for showing added medicine -->
-        <div class="ui stackable grid" style="margin: 100px;">
-
-            {% for medicine in appointment.medicines.all %}
-            <div class="row">
-                <h3>{{ medicine.name }}</h3> &emsp;
-                <div class="meta">Quantity:{{ medicine.quantity }} &emsp;
-                    Taking Time:{{ medicine.taking_time }} </div>
+        <!-- This is for showing added medicine & Test -->
+        <div class="ui stackable grid medicine_grid" style="margin: 80px;">
+            <div class="sixteen wide column">
+                <div class="ui dividing header">Medicine</div>
+                {% for medicine in appointment.medicines.all %}
+                    <div class="medinice">
+                        <p class="medicine_header">{{ medicine.name }}</p>
+                        <p class="medicine_taking_time">
+                            Quantity:{{ medicine.quantity }} &emsp;
+                            Taking Time:{{ medicine.taking_time }}
+                        </p>
+                    </div>
+                {% endfor %}
             </div>
-            {% endfor %}
+
+            <div class="sixteen wide column">
+                <div class="ui dividing header">Test</div>
+                {% for test in appointment.tests.all %}
+                <div class="medinice">
+                    <p class="medicine_header">{{ test.name }}</p>
+                    <p class="medicine_taking_time"> Test Condition : 
+                        {{ test.condition }}
+                    </p>
+                    <p class="medicine_taking_time">
+                        Test Description : {{ test.description }}
+                    </p>
+                </div>
+                {% endfor %}
+            </div>
+
         </div>
     </div>
 

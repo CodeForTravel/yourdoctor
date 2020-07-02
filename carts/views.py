@@ -98,7 +98,6 @@ class CheckOutView(LoginRequiredMixin,View):
 
     def get(self,request):
         user = self.request.user
-        print(user)
         carts = CartItem.objects.filter(
             user = user,
             is_active = False,
@@ -119,13 +118,11 @@ class UsersPendingAppointment(LoginRequiredMixin,View):
 
     def get(self,request):
         user = self.request.user
-        print(user)
         carts = CartItem.objects.filter(
             user = user,
             is_active = True,
             appointment_complete = False
         )
-        print(carts)
         args = {
             'carts':carts,
         }

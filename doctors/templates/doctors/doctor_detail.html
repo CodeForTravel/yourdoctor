@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
+{% block title %} Doctor Detail {% endblock %}
 {% block head %}
+<link rel="stylesheet" 
+href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.6/dist/semantic.min.css">
+
+
+
     <style>
       .wrapper{
           margin: 20px !important;
@@ -12,11 +18,39 @@
         margin: 10px 0px 10px 0px !important;
         padding: 10px 0px 10px 0px !important;
     }
+    .show_review{
+        margin: 10px 0px 10px 0px !important;
+        padding: 10px 0px 10px 0px !important;
+    }
+    .review_segments{
+        padding: 15px !important;
+    }
+    .ui.header.review{
+        font-size: 22px !important;
+        letter-spacing: 1px !important;
+    }
+    .rating_number{
+        font-size: 18px !important;
+        
+        margin-left: 10px !important;
+        margin-bottom: 2px !important;
+    }
+    .review_date{
+        float: right !important;
+    }
+    /* .ui.star.rating.show{
+        font-size: 15px !important;
+        padding: 5px !important;
+    } */
 
+    
     </style>
 {% endblock %}
     
 {% block content %}
+
+{% load custom_tags %}
+
 <div class="wrapper">
 <div class="ui stackable grid">
     <div class="five wide column">
@@ -28,7 +62,20 @@
     </div>
     <div class="eleven wide right floated column">
         <div class="ui  segment">
-            <h1>{{ doctor.userinfo.first_name }} {{ doctor.userinfo.last_name }}</h1>
+            <div class="ui header">{{ doctor.userinfo.first_name }} {{ doctor.userinfo.last_name }}</div>
+            
+
+            <!-- rating  -->
+            <p>
+                <span class="ui huge yellow rating read only"
+                 data-rating="{{ avg_rating }}" data-max-rating="5"></span>
+                 <span class="rating_number">{{ avg_rating }} / 5</span>
+
+                {% total_review doctor as total_doctor %}
+                <span style="font-size: 18px;">({{ total_doctor }})</span> </p>
+
+
+
             <div class="meta">
                 {% for degree in degrees %}
 
@@ -110,10 +157,10 @@
     </div></div>
 
 
-    <!-- Review Section -->
+    <!-- Review Section submit section-->
+    {% if cartitems %}
     <div class="row">
         <div class="column">
-            {% if cartitems %}
             <div class="review_info">
                 <div class="ui dividing header">
                     Review about your most recent unreviewed appointment!
@@ -135,9 +182,40 @@
                 
                 <button type="submit" class="ui fluid green button">Submit</button>
             </form>
-            {% endif %}
         </div>
     </div>
+    {% endif %}
+
+    <!-- Review Showing section -->
+    
+    {% if reviews %}
+    <div class="row">
+        <div class="column">
+            <div class="show_review">
+                <div class="ui segments review_segments">
+                    <div class="ui header review">Ratings & Reviews of Dr.
+                        {{ doctor.userinfo.first_name }}
+                        {{ doctor.userinfo.last_name }}
+                    </div>
+                    {% for review in reviews %}
+                    <div class="ui vertical segment">
+                        <div class="">
+                            <div class="ui header show_review_comment">
+                                {{ review.user.userinfo.first_name }}
+                                {{ review.user.userinfo.last_name }}
+                            </div>
+                            <div class="review_date">{{ review.created_at }}</div>
+                        </div>
+
+                        <div class="ui star rating show" data-rating="{{ review.rating }}" ></div>
+                        <p>{{ review.comment }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 
 
 </div>
@@ -147,7 +225,12 @@
 {% endblock %}
 
 {% block scripts %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.8.6/components/rating.min.js"></script>
+
 <script>
+
+    
    
     $(document).ready(function () {
         $('.menu .item').tab();
@@ -156,6 +239,13 @@
             initialRating: 3,
             maxRating: 5
         });
+
+
+        // $('.toggle.example .ui.heart.rating')
+        //     .rating('disable')
+        //     ;
+
+        $('.ui.yellow.rating.read.only').rating('disable');
 
         $('.review_form').submit(function (e) {
 

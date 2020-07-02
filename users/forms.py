@@ -1,4 +1,6 @@
 from django import forms
+import base64
+from django.core.files.base import ContentFile
 import re
 from django.contrib.auth.forms import PasswordChangeForm,UserChangeForm
 from . import models
@@ -121,7 +123,8 @@ class EditUserInfoForm(forms.Form):
     dob   = forms.DateField(label="Date Of Birth",
             required=False,
             )
-    image = forms.ImageField(label='Image', required=False,)
+
+    # image = forms.ImageField(label='Image', required=False,)
     
     
 
@@ -130,7 +133,7 @@ class EditUserInfoForm(forms.Form):
         last_name    = self.cleaned_data.get('last_name')
         religion     = self.cleaned_data.get('religion')
         gender       = self.cleaned_data.get('gender')
-        image        = self.cleaned_data.get('image')
+        # image        = self.cleaned_data.get('image')
         mobile       = self.cleaned_data.get('mobile')
 
         if not first_name:
@@ -152,7 +155,7 @@ class EditUserInfoForm(forms.Form):
         last_name    = self.cleaned_data.get('last_name')
         religion     = self.cleaned_data.get('religion')
         gender       = self.cleaned_data.get('gender')
-        image        = self.cleaned_data.get('image')
+        # image        = self.cleaned_data.get('image')
         mobile       = self.cleaned_data.get('mobile')
         dob          = self.cleaned_data.get('dob')
 
@@ -160,7 +163,7 @@ class EditUserInfoForm(forms.Form):
         info.last_name  = last_name
         info.religion   = religion
         info.gender     = gender
-        info.image      = image
+        # info.image      = image
         info.mobile     = mobile
         info.dob        = dob
         info.complete   = True
@@ -204,3 +207,29 @@ class UserAddressForm(forms.Form):
         
         user_address.save()
 
+
+
+def img_convert(img):
+    image_b64 = img  
+
+    with open("image_b64", "rb") as img_file:
+        my_string = base64.b64encode(img_file.read())
+        print(my_string)
+    return my_string
+
+class ImageForm(forms.Form):
+    image = forms.ImageField(required=False,)
+
+    def clean(self):
+        image        = self.cleaned_data.get('image')
+
+        if not image:
+            raise forms.ValidationError("Must Upload Image")
+
+    def update_image(self,user):
+
+        image       = self.cleaned_data.get('image')
+        # image = img_convert(image)
+        user.image  = image
+
+        user.save()

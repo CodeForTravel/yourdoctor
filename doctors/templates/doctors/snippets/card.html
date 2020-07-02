@@ -1,3 +1,6 @@
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.6/dist/semantic.min.css"> -->
+
+{% load custom_tags %}
 
 <div class="ui card" style="width: 220px;">
 
@@ -13,6 +16,17 @@
             {{ doctor.userinfo.first_name }}
             {{ doctor.userinfo.last_name }}
         </a>
+
+
+
+        {% get_rating doctor as doctor_rating %}
+        <span class="ui mini yellow disabled rating read only" data-rating="{{ doctor_rating }}" data-max-rating="5"></span>
+        <span>{{doctor_rating}}</span>
+
+        {% total_review doctor as total_doctor %}
+        <span>({{ total_doctor }})</span>
+       
+
 
         <!-- Doctor Speciality  -->
         <div class="meta">
@@ -46,24 +60,11 @@
 </div>
 </a>
 
-<!-- <div class="ui card" style="width: 210px; height: auto;">
-    {% if doctor.userinfo.image %}
-    <div class="image">
-        <a href="{% url 'doctors:doctor_detail' pk=doctor.pk %}">
-        <img src="{{ doctor.userinfo.image.url }}" style="width: 210px; height: 230px;">
-        </a>
-    </div>
-    {% endif %}
-    <div class="content">
-        <a href="{% url 'doctors:doctor_detail' pk=doctor.pk %}" class="header">{{ doctor.userinfo.first_name }} {{ doctor.userinfo.last_name }}</a>
-        <div class="meta">
-            <span class="date"></</span>
-        </div>
-    </div>
-    <div class="extra content">
-        <a href="{% url 'appointments:appointment_schedule' doctor.pk %}">
-            <button class="ui button">Schedule</button>
-        </a>
-    </div>
-</div> -->
 
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.8.6/components/rating.min.js"></script> -->
+
+<script>
+    $('.ui.rating').rating();
+    
+</script>
